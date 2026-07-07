@@ -60,9 +60,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql', 
         'NAME': 'db_event_handling',
-        'USER': 'root',
+        'USER': 'event_user',
         'PASSWRORD': '2662',
-        'HOST': 'localhost',
+        'HOST': '127.0.0.1',
         'PORT': '5432'
     }
 }
