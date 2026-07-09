@@ -1,10 +1,12 @@
 import json
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required, csrf_exempt
 from django.http import JsonResponse
 from authApp.models import Role, User
 
 
 # Create your views here.
+@csrf_exempt
 def register_user(request):
     if request.method == 'POST':
         setData = json.loads(request.body)
@@ -23,5 +25,4 @@ def register_user(request):
         user = User.objects.create(username=userName, email=email, password=password, role=user_role)
         if user is not None: 
             user.save();
-        
-    return JsonResponse({'message': 'User registered successfully'})
+        return JsonResponse({'message': 'User registered successfully'})
