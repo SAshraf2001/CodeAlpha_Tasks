@@ -1,6 +1,7 @@
 import json
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required, csrf_exempt
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from authApp.models import Role, User
 
@@ -26,3 +27,4 @@ def register_user(request):
         if user is not None: 
             user.save();
         return JsonResponse({'message': 'User registered successfully'})
+    return JsonResponse({'message': 'Working'})
