@@ -16,7 +16,7 @@ def register_user(request):
         userRole = role
         user_role = Role.objects.filter(role_name=userRole)
         if user_role.exists():
-            pass
+            user_role = user_role.first(); 
         else:
             user_role = Role.objects.create(role_name=userRole)
             user_role.save();
