@@ -11,7 +11,7 @@ from authApp.models import Role, User
 def register_user(request):
     if request.method == 'POST':
         setData = json.loads(request.body)
-        print(setData)
+        # print(setData)
         userName = setData.get('user_name')
         email = setData.get('email')
         password = setData.get('pass')
