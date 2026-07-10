@@ -1,9 +1,10 @@
 import json
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from authApp.models import Role, User
+from django.contrib.auth import authenticate, login, logout
 
 
 # Create your views here.
@@ -33,5 +34,30 @@ def register_user(request):
                              'status': str(error)}) # Error Wrapped in String:
     return JsonResponse({'message': 'Working'})
 
+@csrf_exempt
 def login_user(request):
-    pass
+    try: 
+        if request.method == 'POST':
+            setLoginData = json.loads(request.body)
+            loginUserName = setLoginData.get('user_name')
+            loginPassword = setLoginData.get('pass')
+            # loginRole = setLoginData.get('role')
+            
+            if((not loginUserName) or (not loginPassword)):
+                return JsonResponse({'status': 'No User Found, Try Again'})
+            else: 
+                user = authenticate(username=loginUserName, password=loginPassword)
+                if user is not None:
+                    login(request, user)
+                    return JsonResponse({
+                        'status': 'Login Confirmed, User is Loggedin Successfully:',
+                        'User_name': user.username
+                    })
+                else: 
+                    return JsonResponse({'message': "You must Signup or Register to be Logged In:"})
+    except json.JSONDecodeError as error:
+        return JsonResponse({
+            'Status': "JSON couldn't load",
+            'Error': str(error)
+        })
+    return JsonResponse({'message': 'Working Fine:'})
