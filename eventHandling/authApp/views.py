@@ -62,3 +62,14 @@ def login_user(request):
             'Error': str(error)
         })
     return JsonResponse({'message': 'Working Fine:'})
+
+@csrf_exempt
+def logout_user(request):
+    if request.method == 'POST':
+        logout(request)
+        return JsonResponse({
+            'message': 'User has been Logged Out'
+        })
+    return JsonResponse({
+        'Status': 'JSON Working:'
+    })
