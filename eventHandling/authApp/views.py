@@ -25,8 +25,8 @@ def register_user(request):
             else:
                 user_role = Role.objects.create(role_name=userRole) # Otherwise new role is created, if failed to fetch from the database:
                 user_role.save();
-            user = User.objects.create_user(username=userName, email=email, password=password, role=user_role)
-            user.set_password(password)
+            user = User.objects.create_user(username=userName, email=email, password=password, role=user_role) # Created the User by using builtin create_user
+            user.set_password(password) # Saving the Password in raw numbers instead of String:
             if user is not None: 
                 user.save();
             return JsonResponse({'message': 'User registered successfully', 'userName':user.username}) # Returning The JSON response once succeeded.
