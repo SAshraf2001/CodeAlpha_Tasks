@@ -32,3 +32,6 @@ def register_user(request):
         return JsonResponse({'message': 'Error Loading the Json',
                              'status': str(error)}) # Error Wrapped in String:
     return JsonResponse({'message': 'Working'})
+
+def login_user(request):
+    pass
