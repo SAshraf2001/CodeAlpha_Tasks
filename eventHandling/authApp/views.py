@@ -65,10 +65,24 @@ def login_user(request):
 
 @csrf_exempt
 def logout_user(request):
-    if request.method == 'POST':
-        logout(request)
+    try:
+        if request.method == 'POST':
+            
+            if request.user.is_authenticated: # Checking whether the user is Logged In 
+                
+                # print(f'User Found --> {request.user.username}') # Throwing the Name of the Current Logged In user
+                logged_user = request.user.username # Storing the name into the variable
+                logout(request)
+                
+                return JsonResponse({
+                'message': 'User has been Logged Out',
+                'User': logged_user
+                })
+            else:
+                return JsonResponse({'status': 'NO user found:'})    
+    except json.JSONDecodeError as error:
         return JsonResponse({
-            'message': 'User has been Logged Out'
+            "status": error
         })
     return JsonResponse({
         'Status': 'JSON Working:'
