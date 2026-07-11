@@ -44,12 +44,12 @@ def login_user(request):
             loginUserName = setLoginData.get('user_name')
             loginPassword = setLoginData.get('pass')
             loginRole = setLoginData.get('role')
-            user_role = get_object_or_404(Role, role_name=loginRole)
+            user_role = Role.objects.filter(role_name=loginRole).first()
             
-            if user_role is not None:
-                return JsonResponse({
-                    'status': 'Role is Fetched: {user_role}'
-                })
+            # if user_role is not None:
+            #     return JsonResponse({
+            #         'status': 'Role is Fetched: {user_role}'
+            #     })
             
             
             if((not loginUserName) or (not loginPassword)):
