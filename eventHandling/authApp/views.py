@@ -52,8 +52,11 @@ def login_user(request):
             #     })
             
             
-            if((not loginUserName) or (not loginPassword)):
-                return JsonResponse({'status': 'No User Found, Try Again'})
+            if((not loginUserName) or (not loginPassword) or (not user_role)):
+                return JsonResponse({
+                    'status': 'No User Found, Try Again',
+                    'Role Status': "No Role is Found Also Try Again: {user_role}"
+                    })
             else: 
                 user = authenticate(username=loginUserName, password=loginPassword)
                 if user is not None:
