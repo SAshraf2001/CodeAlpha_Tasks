@@ -55,7 +55,7 @@ def login_user(request):
             if((not loginUserName) or (not loginPassword) or (not user_role)):
                 return JsonResponse({
                     'status': 'No User Found, Try Again',
-                    'Role Status': "No Role is Found Also Try Again: {user_role}"
+                    'Role Status': f"No Role is Found Also Try Again: {user_role}"
                     })
             else: 
                 user = authenticate(username=loginUserName, password=loginPassword)
@@ -63,7 +63,8 @@ def login_user(request):
                     login(request, user)
                     return JsonResponse({
                         'status': 'Login Confirmed, User is Loggedin Successfully:',
-                        'User_name': user.username
+                        'User_name': user.username, 
+                        'Role Status': f'Role: {user_role}'
                     })
                 else: 
                     return JsonResponse({'message': "You must Signup or Register to be Logged In:"})
