@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from authApp.models import Role, User
 from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import get_object_or_404
 
 
 # Create your views here.
@@ -42,7 +43,8 @@ def login_user(request):
             setLoginData = json.loads(request.body)
             loginUserName = setLoginData.get('user_name')
             loginPassword = setLoginData.get('pass')
-            # loginRole = setLoginData.get('role')
+            loginRole = setLoginData.get('role')
+            user_role = Role.objects.get
             
             if((not loginUserName) or (not loginPassword)):
                 return JsonResponse({'status': 'No User Found, Try Again'})
