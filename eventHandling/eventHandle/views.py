@@ -38,7 +38,7 @@ def event_registeration(request):
     except json.JSONDecodeError as error: 
         return JsonResponse({
             'Status': "Exception Caught",
-            'Message': error
+            'Message': str(error)
         })
     return JsonResponse({
         'status': 'Passed',
