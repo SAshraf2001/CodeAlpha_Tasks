@@ -14,6 +14,7 @@ def user_register(request):
         'message': "User Registeration URL is working completely:"
     })
 
+@csrf_exempt
 def event_registeration(request):
     # Events Registeration
     try:
@@ -23,7 +24,7 @@ def event_registeration(request):
             eventPlace = setEventData.get['Place Name']
             eventScheduled = setEventData.get['Event Date']
             capacity = setEventData.get['Event Capacity']
-            registeredEvent = EventRegister.objects.create(titleName=titleName, place=eventPlace, date=eventScheduled, capacity=capacity)
+            registeredEvent = EventRegister.objects.create(title=titleName, place=eventPlace, date=eventScheduled, capacity=capacity)
             
             if registeredEvent is not None:
                 registeredEvent.save()
