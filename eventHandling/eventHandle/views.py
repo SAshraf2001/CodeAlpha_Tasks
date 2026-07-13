@@ -23,8 +23,9 @@ def event_registeration(request):
             titleName = setEventData.get['Event Name']
             eventPlace = setEventData.get['Place Name']
             eventScheduled = setEventData.get['Event Date']
+            eventTime = datetime.strptime(eventScheduled, "%Y-%m-%d %H:%M:%S")
             capacity = setEventData.get['Event Capacity']
-            registeredEvent = EventRegister.objects.create(title=titleName, place=eventPlace, date=eventScheduled, capacity=capacity)
+            registeredEvent = EventRegister.objects.create(title=titleName, place=eventPlace, date=eventTime, capacity=capacity)
             
             if registeredEvent is not None:
                 registeredEvent.save()
