@@ -27,18 +27,13 @@ def event_registeration(request):
             capacity = setEventData.get('Event Capacity')
             registeredEvent = EventRegister.objects.create(title=titleName, place=eventPlace, date=eventTime, capacity=capacity)
             
-            if registeredEvent is not None:
-                registeredEvent.save()
-                return JsonResponse({
-                    'status': "Successfully Created the Event:",
-                    'EventTitle': titleName,
-                    'Event Place': eventPlace,
-                    'Event Date': eventTime,
-                    'Seating Capacity': capacity
-                })
-            else:
-                return JsonResponse({
-                    'status': "Failed to save the Events"
+            registeredEvent.save()
+            return JsonResponse({
+                'status': "Successfully Created the Event:",
+                'EventTitle': titleName,
+                'Event Place': eventPlace,
+                'Event Date': eventTime,
+                'Seating Capacity': capacity
                 })
     except json.JSONDecodeError as error: 
         return JsonResponse({
