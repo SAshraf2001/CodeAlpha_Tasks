@@ -21,10 +21,28 @@ def event_registeration(request):
             setEventData = json.loads(request.body) # Getting data fetched as requested.
             titleName = setEventData.get['Event Name']
             eventPlace = setEventData.get['Place Name']
-            eventscheduled = setEventData.get['Event Date']
+            eventScheduled = setEventData.get['Event Date']
             capacity = setEventData.get['Event Capacity']
-    except: 
-        pass
+            registeredEvent = EventRegister.objects.create(titleName=titleName, place=eventPlace, date=eventScheduled, capacity=capacity)
+            
+            if registeredEvent is not None:
+                registeredEvent.save()
+                return JsonResponse({
+                    'status': "Successfully Created the Event:",
+                    'EventTitle': {titleName},
+                    'Event Place': {eventPlace},
+                    'Event Date': {eventScheduled},
+                    'Seating Capacity': {capacity}
+                })
+            else:
+                return JsonResponse({
+                    'status': "Failed to save the Events"
+                })
+    except json.JSONDecodeError as error: 
+        return JsonResponse({
+            'Status': "Exception Caught",
+            'Message': error
+        })
     return JsonResponse({
         'status': 'Passed',
         'message': "Event Registeration URL is working completely:"
