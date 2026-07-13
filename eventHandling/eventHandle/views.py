@@ -54,6 +54,7 @@ def event_list(request):
         'status': 'Passed',
         'message': "Events Listing URL is working completely:"
     })
+
 def user_list(request):
     # All the users fetched.
     return JsonResponse({
