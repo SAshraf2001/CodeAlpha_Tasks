@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from eventHandle.models import EventRegister, UserRegister
 from django.utils import timezone
+import json
 
 # Create your views here.
 
@@ -15,6 +16,15 @@ def user_register(request):
 
 def event_registeration(request):
     # Events Registeration
+    try:
+        if request.method == 'POST':
+            setEventData = json.loads(request.body) # Getting data fetched as requested.
+            titleName = setEventData.get['Event Name']
+            eventPlace = setEventData.get['Place Name']
+            eventscheduled = setEventData.get['Event Date']
+            capacity = setEventData.get['Event Capacity']
+    except: 
+        pass
     return JsonResponse({
         'status': 'Passed',
         'message': "Event Registeration URL is working completely:"
