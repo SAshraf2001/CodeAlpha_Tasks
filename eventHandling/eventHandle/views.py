@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from eventHandle.models import EventRegister, UserRegister
-from django.utils import timezone
+from datetime import datetime
 import json
 
 # Create your views here.
