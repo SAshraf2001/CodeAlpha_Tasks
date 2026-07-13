@@ -33,7 +33,7 @@ def event_registeration(request):
                     'status': "Successfully Created the Event:",
                     'EventTitle': {titleName},
                     'Event Place': {eventPlace},
-                    'Event Date': {eventScheduled},
+                    'Event Date': {eventTime},
                     'Seating Capacity': {capacity}
                 })
             else:
