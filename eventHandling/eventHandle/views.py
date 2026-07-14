@@ -62,6 +62,7 @@ def user_list(request):
 
 def event_handle(request):
     # Event Handling:
+    
     return JsonResponse({
         'status': 'Passed',
         'message': "Event Handling URL is working completely:"
