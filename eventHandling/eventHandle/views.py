@@ -27,10 +27,10 @@ def user_register(request):
                 loggedUser.email = email 
                 loggedUser.save()
                 
-                UserRegister.objects.create(firstName=firstName, lastName=lastName, address=address, phoneNumber=phoneNumber)
+                UserRegister.objects.create(firstName=firstName,user=loggedUser, lastName=lastName, address=address, phoneNumber=phoneNumber)
                 return JsonResponse({
                     'status' : 'The User is Authenticated and is fetched:',
-                    'message': loggedUser,
+                    'message': loggedUser.username,
                     'First Name': firstName,
                     'Last Name': lastName,
                     'Address': address,
@@ -41,7 +41,10 @@ def user_register(request):
                     'message': 'No User Found:'
                 })
     except json.JSONDecodeError as error:
-        pass
+        return JsonResponse({
+            'Status': 'Exception Caught',
+            'Message': str(error)
+        })
     return JsonResponse({
         'status': 'Successfull',
         'message': "Working Correctly"
