@@ -11,17 +11,28 @@ import json
 @csrf_exempt
 def user_register(request):
     # User Registeration before Event Placing:
-    if request.user.is_authenticated:
-        loggedUser = request.user.username;
-        return JsonResponse({
-            'status' : 'The User is Authenticated and is fetched:',
-            'message': loggedUser
-        })
-    else: 
-        return JsonResponse({
-            'message': 'No User Found:'
-        })
-    
+    try:
+        if request.method == 'POST':
+            if request.user.is_authenticated:
+                setData = json.loads(request.body);
+                firstName = setData.get('First Name')
+                lastName = setData.get('Last Name')
+                # userName = setData.get('Username')
+                # email = setData.get('Email')
+                address = setData.get('Address')
+                phoneNumber = setData.get('Phone Number')
+                UserRegister.objects.create(firstName=firstName, lastName=lastName, address=address, phoneNumber=phoneNumber)
+                loggedUser = request.user.username;
+                return JsonResponse({
+                    'status' : 'The User is Authenticated and is fetched:',
+                    'message': loggedUser
+                })
+            else: 
+                return JsonResponse({
+                    'message': 'No User Found:'
+                })
+    except json.JSONDecodeError as error:
+        pass    
 
 @csrf_exempt
 def event_registeration(request):
