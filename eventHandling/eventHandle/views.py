@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from eventHandle.models import EventRegister, UserRegister
+from authApp.models import User
 from datetime import datetime
 import json
 
@@ -10,10 +11,17 @@ import json
 @csrf_exempt
 def user_register(request):
     # User Registeration before Event Placing:
-    return JsonResponse({
-        'status': 'Passed',
-        'message': "User Registeration URL is working completely:"
-    })
+    if request.user.is_authenticated:
+        loggedUser = request.user.username;
+        return JsonResponse({
+            'status' : 'The User is Authenticated and is fetched:',
+            'message': loggedUser
+        })
+    else: 
+        return JsonResponse({
+            'message': 'No User Found:'
+        })
+    
 
 @csrf_exempt
 def event_registeration(request):
