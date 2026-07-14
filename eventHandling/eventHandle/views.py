@@ -23,9 +23,9 @@ def user_register(request):
                 address = setData.get('Address')
                 phoneNumber = setData.get('Phone Number')
                 
-                loggedUser.username = userName 
-                loggedUser.email = email 
-                loggedUser.save()
+                loggedUser.username = userName # Updating the Username as it is.
+                loggedUser.email = email # Updating the email as it is.
+                loggedUser.save() # Finally Saving the Data
                 
                 UserRegister.objects.create(firstName=firstName,user=loggedUser, lastName=lastName, address=address, phoneNumber=phoneNumber)
                 return JsonResponse({
