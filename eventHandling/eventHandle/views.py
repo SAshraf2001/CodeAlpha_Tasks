@@ -25,14 +25,22 @@ def user_register(request):
                 loggedUser = request.user.username;
                 return JsonResponse({
                     'status' : 'The User is Authenticated and is fetched:',
-                    'message': loggedUser
+                    'message': loggedUser,
+                    'First Name': firstName,
+                    'Last Name': lastName,
+                    'Address': address,
+                    'Contact Number': phoneNumber
                 })
             else: 
                 return JsonResponse({
                     'message': 'No User Found:'
                 })
     except json.JSONDecodeError as error:
-        pass    
+        pass
+    return JsonResponse({
+        'status': 'Successfull',
+        'message': "Working Correctly"
+    })
 
 @csrf_exempt
 def event_registeration(request):
