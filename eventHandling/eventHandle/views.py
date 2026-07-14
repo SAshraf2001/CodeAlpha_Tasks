@@ -10,19 +10,24 @@ import json
 
 @csrf_exempt
 def user_register(request):
-    # User Registeration before Event Placing:
+    # User Registeration before Event Placing;
     try:
         if request.method == 'POST':
             if request.user.is_authenticated:
-                setData = json.loads(request.body);
+                loggedUser = request.user
+                setData = json.loads(request.body)
                 firstName = setData.get('First Name')
                 lastName = setData.get('Last Name')
-                # userName = setData.get('Username')
-                # email = setData.get('Email')
+                userName = setData.get('Username')
+                email = setData.get('Email')
                 address = setData.get('Address')
                 phoneNumber = setData.get('Phone Number')
+                
+                loggedUser.username = userName 
+                loggedUser.email = email 
+                loggedUser.save()
+                
                 UserRegister.objects.create(firstName=firstName, lastName=lastName, address=address, phoneNumber=phoneNumber)
-                loggedUser = request.user.username;
                 return JsonResponse({
                     'status' : 'The User is Authenticated and is fetched:',
                     'message': loggedUser,
