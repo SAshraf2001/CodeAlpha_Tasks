@@ -64,7 +64,8 @@ def login_user(request):
                     return JsonResponse({
                         'status': 'Login Confirmed, User is Loggedin Successfully:',
                         'User_name': user.username, 
-                        'Role Status': f'Role: {user_role}'
+                        'Role Status': f'Role: {user_role}',
+                        'Token Key': request.session.session_key
                     })
                 else: 
                     return JsonResponse({'message': "You must Signup or Register to be Logged In:"})
