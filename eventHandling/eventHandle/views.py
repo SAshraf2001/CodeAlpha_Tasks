@@ -97,13 +97,18 @@ def event_list(request):
 @login_required
 def user_list(request):
     # All the users fetched.
-    setUserData = UserRegister.objects.filter()
-    print(setUserData)
+    setUserData = UserRegister.objects.filter() # Getting all the data filtered and passed to the said variable
+    # print(setUserData) Debugging...
+    user_data = [] # Appending the Fetched data.
     for item in setUserData:
         print(item.user.email)
+        user_data.append({
+            'First Name': item.firstName, 'Last Name': item.lastName, 'User Name':item.user.username, 'Email':item.user.email, 'Address':item.address, 'Contact Number': item.phoneNumber
+        })
+    # print(f'Data is fetched and is appended: ---> {user_data}') Optional to check and debug...
     return JsonResponse({
-        'status': 'Passed',
-        'message': "User Listing URL is working completely:"
+        'Status': 'Data Fetched',
+        'Data': user_data
     })
 
 def event_handle(request):
