@@ -110,9 +110,17 @@ def user_list(request):
         'Data': user_data
     })
 
+@csrf_exempt
+@login_required
 def event_handle(request):
     # Event Handling:
-    
+    try:
+        pass
+    except json.JSONDecodeError as error:
+        return JsonResponse({
+            'Status': 'Failed',
+            'Message': f'Error: Exception Caught in json:{str(error)}'
+        })
     return JsonResponse({
         'status': 'Passed',
         'message': "Event Handling URL is working completely:"
