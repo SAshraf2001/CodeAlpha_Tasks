@@ -89,7 +89,6 @@ def event_list(request):
         event_list.append({'Name': item['title'], 'Place':item['place'], 'Date':item['date'], 'Capacity':item['capacity']})
     return JsonResponse({
         'status': 'Passed',
-        'message': "Events Listing URL is working completely:",   
         'Data': event_list
     })
 
