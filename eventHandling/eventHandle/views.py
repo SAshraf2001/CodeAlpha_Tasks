@@ -107,3 +107,12 @@ def event_handle(request):
         'status': 'Passed',
         'message': "Event Handling URL is working completely:"
     })
+    
+
+
+def event_update(request):
+    pass
+
+
+def event_delete(request):
+    pass
