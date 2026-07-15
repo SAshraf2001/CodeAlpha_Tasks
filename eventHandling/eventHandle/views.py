@@ -46,6 +46,7 @@ def user_register(request):
         'message': "Working Correctly"
     })
 
+@login_required
 @csrf_exempt
 def event_registeration(request):
     # Events Registeration
