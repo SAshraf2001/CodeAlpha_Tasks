@@ -9,8 +9,8 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
-@login_required
 @csrf_exempt
+@login_required
 def user_register(request):
     # User Registeration before Event Placing;
     try:
@@ -46,8 +46,8 @@ def user_register(request):
         'message': "Working Correctly"
     })
 
-@login_required
 @csrf_exempt
+@login_required
 def event_registeration(request):
     # Events Registeration
     try:
@@ -78,8 +78,10 @@ def event_registeration(request):
         'message': "Event Registeration URL is working completely:"
     })
 
+@login_required
 def event_list(request):
     # All The Events are listed.
+    
     return JsonResponse({
         'status': 'Passed',
         'message': "Events Listing URL is working completely:"
