@@ -115,7 +115,16 @@ def user_list(request):
 def event_handle(request):
     # Event Handling:
     try:
-        pass
+        if request.method == 'POST':
+            setData = json.loads(request.body)
+            try:
+                eventID = setData.get('Registered Event ID')
+            except ValueError as error:
+                return JsonResponse({
+                    'status': f'(Error: Exception Caught---> {str(error)})'
+                })
+            eventData = EventRegister.objects.get(id=eventID)
+            print(f'Event Data Fetched: {eventData}')
     except json.JSONDecodeError as error:
         return JsonResponse({
             'Status': 'Failed',
