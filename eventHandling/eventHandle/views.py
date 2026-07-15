@@ -2,12 +2,14 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from eventHandle.models import EventRegister, UserRegister
-from authApp.models import User
+# from authApp.models import User
 from datetime import datetime
 import json
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+
+@login_required
 @csrf_exempt
 def user_register(request):
     # User Registeration before Event Placing;
