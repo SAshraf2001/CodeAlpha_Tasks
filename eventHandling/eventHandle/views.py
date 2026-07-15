@@ -118,13 +118,16 @@ def event_handle(request):
         if request.method == 'POST':
             setData = json.loads(request.body)
             try:
-                eventID = setData.get('Registered Event ID')
+                eventID = setData.get('RegisteredId')
             except ValueError as error:
                 return JsonResponse({
                     'status': f'(Error: Exception Caught---> {str(error)})'
                 })
             eventData = EventRegister.objects.get(id=eventID)
-            print(f'Event Data Fetched: {eventData}')
+            return JsonResponse({
+                'status': eventData.title
+            })
+            # print(f'Event Data Fetched: {eventData}')
     except json.JSONDecodeError as error:
         return JsonResponse({
             'Status': 'Failed',
