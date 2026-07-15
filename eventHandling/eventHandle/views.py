@@ -80,7 +80,7 @@ def event_registeration(request):
 
 @csrf_exempt
 @login_required
-def event_list():
+def event_list(request):
     # All The Events are listed.
     setData = EventRegister.objects.values('title', 'place', 'date', 'capacity')
     getData = list(setData)
@@ -95,7 +95,7 @@ def event_list():
 
 @csrf_exempt
 @login_required
-def user_list():
+def user_list(request):
     # All the users fetched.
     setUserData = UserRegister.objects.filter()
     print(setUserData)
