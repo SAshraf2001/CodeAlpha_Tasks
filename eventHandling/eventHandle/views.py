@@ -119,7 +119,6 @@ def event_handle(request):
     })
     
 
-
 def event_update(request):
     pass
 
