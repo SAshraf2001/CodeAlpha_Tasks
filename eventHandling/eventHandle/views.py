@@ -93,8 +93,14 @@ def event_list(request):
         'Data': event_list
     })
 
+@csrf_exempt
+@login_required
 def user_list(request):
     # All the users fetched.
+    setUserData = UserRegister.objects.filter()
+    print(setUserData)
+    for item in setUserData:
+        print(item.user.email)
     return JsonResponse({
         'status': 'Passed',
         'message': "User Listing URL is working completely:"
