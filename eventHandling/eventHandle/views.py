@@ -78,13 +78,19 @@ def event_registeration(request):
         'message': "Event Registeration URL is working completely:"
     })
 
+@csrf_exempt
 @login_required
 def event_list(request):
     # All The Events are listed.
-    
+    setData = EventRegister.objects.values('title', 'place', 'date', 'capacity')
+    getData = list(setData)
+    event_list = [] # Appending the Data that is extracted from the getData
+    for item in getData:
+        event_list.append({'Name': item['title'], 'Place':item['place'], 'Date':item['date'], 'Capacity':item['capacity']})
     return JsonResponse({
         'status': 'Passed',
-        'message': "Events Listing URL is working completely:"
+        'message': "Events Listing URL is working completely:",   
+        'Data': event_list
     })
 
 def user_list(request):
