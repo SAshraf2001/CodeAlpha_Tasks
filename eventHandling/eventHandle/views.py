@@ -116,24 +116,24 @@ def event_handle(request):
     # Event Handling:
     try:
         if request.method == 'POST':
-            setData = json.loads(request.body)
-            userData = UserRegister.objects.get(user=request.user)
+            setData = json.loads(request.body) # Data to be Loaded and Extracted.
+            userData = UserRegister.objects.get(user=request.user) # Extracting the Existing User.
             try:
-                eventID = setData.get('RegisteredId')
+                eventID = setData.get('RegisteredId') # Letting the user puts the Id he wants to registered.
             except ValueError as error:
                 return JsonResponse({
                     'status': f'(Error: Exception Caught---> {str(error)})'
                 })
-            eventData = EventRegister.objects.get(id=eventID)
+            eventData = EventRegister.objects.get(id=eventID) # Extracting the Data against the given ID..
             seatingCapacity = setData.get('Reserved Seats')
             leftSeats = 0
             if ((seatingCapacity <= eventData.capacity)): # It must ensures that the seating Capacity must be less then the registered Seats of the Event
-                leftSeats = eventData.capacity - seatingCapacity
-            else:
+                leftSeats = eventData.capacity - seatingCapacity # Finally getting the seats subtracted.
+            else: 
                 return JsonResponse({
                     'Message': 'The Capacity must be lesser than the allowed Capacity'
                 })
-            eventData.capacity = leftSeats
+            eventData.capacity = leftSeats # Updating the Seats of EventRegister Model
             eventData.save();
             EventHandle.objects.create(registeredUser=userData, userTicket=eventData, seatingCapacity=seatingCapacity)
             return JsonResponse({
