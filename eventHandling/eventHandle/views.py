@@ -151,6 +151,11 @@ def event_handle(request):
     })
     
 
+@csrf_exempt
+@login_required
+def regiseteredEvent_list(request):
+    pass
+
 def event_update(request):
     pass
 
