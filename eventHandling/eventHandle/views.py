@@ -162,7 +162,8 @@ def regiseteredEvent_list(request):
         for items in setEventData:
             item_added.append({
                 "Title": items.userTicket.title,
-                "User": items.registeredUser.user.username
+                "User": items.registeredUser.user.username,
+                'Reserved Seats': items.seatingCapacity
             })
             
         return JsonResponse({
