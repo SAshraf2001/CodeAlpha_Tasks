@@ -1,7 +1,7 @@
 # from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from eventHandle.models import EventRegister, UserRegister
+from eventHandle.models import EventRegister, UserRegister, EventHandle
 # from authApp.models import User
 from datetime import datetime
 import json
@@ -117,6 +117,7 @@ def event_handle(request):
     try:
         if request.method == 'POST':
             setData = json.loads(request.body)
+            userData = UserRegister.objects.get(user=request.user)
             try:
                 eventID = setData.get('RegisteredId')
             except ValueError as error:
@@ -124,6 +125,13 @@ def event_handle(request):
                     'status': f'(Error: Exception Caught---> {str(error)})'
                 })
             eventData = EventRegister.objects.get(id=eventID)
+            seatingCapacity = setData.get('LeftSeats')
+            leftSeats = 0
+            leftSeats = eventData.capacity - seatingCapacity
+            
+            eventData.capacity = leftSeats
+            eventData.save();
+            EventHandle.objects.create(registeredUser=userData, userTicket=eventData, seatingCapacity=seatingCapacity)
             return JsonResponse({
                 'status': eventData.title
             })
