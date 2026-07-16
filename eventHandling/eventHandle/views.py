@@ -125,10 +125,14 @@ def event_handle(request):
                     'status': f'(Error: Exception Caught---> {str(error)})'
                 })
             eventData = EventRegister.objects.get(id=eventID)
-            seatingCapacity = setData.get('LeftSeats')
+            seatingCapacity = setData.get('Reserved Seats')
             leftSeats = 0
-            leftSeats = eventData.capacity - seatingCapacity
-            
+            if ((seatingCapacity <= eventData.capacity)): # It must ensures that the seating Capacity must be less then the registered Seats of the Event
+                leftSeats = eventData.capacity - seatingCapacity
+            else:
+                return JsonResponse({
+                    'Message': 'The Capacity must be lesser than the allowed Capacity'
+                })
             eventData.capacity = leftSeats
             eventData.save();
             EventHandle.objects.create(registeredUser=userData, userTicket=eventData, seatingCapacity=seatingCapacity)
