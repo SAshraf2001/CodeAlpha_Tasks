@@ -124,7 +124,12 @@ def event_handle(request):
                 return JsonResponse({
                     'status': f'(Error: Exception Caught---> {str(error)})'
                 })
-            eventData = EventRegister.objects.get(id=eventID) # Extracting the Data against the given ID..
+            try:
+                eventData = EventRegister.objects.get(id=eventID) # Extracting the Data against the given ID..
+            except EventRegister.DoesNotExist as error:
+                return JsonResponse({
+                    'Status': f'Error: Exception Caught ---> No Event Found: {str(error)}'
+                })
             seatingCapacity = setData.get('Reserved Seats')
             leftSeats = 0
             if ((seatingCapacity <= eventData.capacity)): # It must ensures that the seating Capacity must be less then the registered Seats of the Event
