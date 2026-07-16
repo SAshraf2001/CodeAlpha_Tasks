@@ -159,6 +159,10 @@ def regiseteredEvent_list(request):
         setEventData = EventHandle.objects.filter(registeredUser = user_data)
         # print(f'Events are fetched: {setEventData}')
         item_added = [] # Appending all the data to new List for getting it extracted to the Json Response:
+        for items in item_added:
+            items.append({
+                
+            })
         return JsonResponse({
             'Message':'Fixed and Working'
         })
