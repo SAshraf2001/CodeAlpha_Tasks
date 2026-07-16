@@ -160,11 +160,13 @@ def regiseteredEvent_list(request):
         # print(f'Events are fetched: {setEventData}')
         item_added = [] # Appending all the data to new List for getting it extracted to the Json Response:
         for items in setEventData:
-            items.append({
-                "User Name": items.registeredUser.username
+            item_added.append({
+                "Title": items.userTicket.title,
+                "User": items.registeredUser.user.username
             })
+            
         return JsonResponse({
-            'Message':'Fixed and Working'
+            'Message': item_added
         })
     return JsonResponse({
         'Status': "Passed"
