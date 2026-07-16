@@ -157,7 +157,8 @@ def regiseteredEvent_list(request):
     if request.method == 'POST':
         user_data = UserRegister.objects.get(user=request.user)
         setEventData = EventHandle.objects.filter(registeredUser = user_data)
-        print(f'Events are fetched: {setEventData}')
+        # print(f'Events are fetched: {setEventData}')
+        item_added = [] # Appending all the data to new List for getting it extracted to the Json Response:
         return JsonResponse({
             'Message':'Fixed and Working'
         })
