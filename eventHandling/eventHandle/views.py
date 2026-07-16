@@ -154,7 +154,16 @@ def event_handle(request):
 @csrf_exempt
 @login_required
 def regiseteredEvent_list(request):
-    pass
+    if request.method == 'POST':
+        user_data = UserRegister.objects.get(user=request.user)
+        setEventData = EventHandle.objects.filter(registeredUser = user_data)
+        print(f'Events are fetched: {setEventData}')
+        return JsonResponse({
+            'Message':'Fixed and Working'
+        })
+    return JsonResponse({
+        'Status': "Passed"
+    })
 
 def event_update(request):
     pass
