@@ -233,10 +233,21 @@ def event_delete(request):
                 'Message': eventItems
             })
         if request.method == 'POST':
-            pass
+            setData = json.loads(request.body)
+            setEventID = setData.get('Event Id')
+            getData = EventRegister.objects.get(id=setEventID)
+            getData.delete()
+            
+            return JsonResponse({
+                'Status': "Passed",
+                'Message': "Deleted The Said Event successfully"
+            })
     
     except json.JSONDecodeError as error:
-        pass
+        return JsonResponse({
+            'Status': "Failed",
+            'Message': f'Exception Caught: Error ---> {str(error)}'
+        })
     
     return JsonResponse({
         'Status': "Passed",
