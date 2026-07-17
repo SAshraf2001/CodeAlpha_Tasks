@@ -186,8 +186,9 @@ def cancelEvent(request):
             setData = json.loads(request.body)
             getID = setData.get('Event ID')
             try: 
-                userData = EventHandle.objects.get(registeredUser=request.user)
-                getEventData = EventHandle.objects.get(id=getID, userTicket=userData)
+                userData = UserRegister.objects.get(user=request.user)
+                getUserData = EventHandle.objects.get(registeredUser=userData)
+                getEventData = EventHandle.objects.get(id=getID, userTicket=getUserData)
             except EventHandle.DoesNotExist as error:
                 return JsonResponse({
                     'Message': f'Exception Caught: ---> No user Found:{str(error)}'
