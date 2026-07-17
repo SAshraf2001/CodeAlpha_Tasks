@@ -178,6 +178,12 @@ def regiseteredEvent_list(request):
         'Status': "Passed"
     })
 
+@csrf_exempt
+@login_required
+def cancelEvent(request):
+    pass
+
+
 def event_update(request):
     pass
 
