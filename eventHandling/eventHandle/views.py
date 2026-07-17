@@ -218,7 +218,15 @@ def event_update(request):
 
 def event_delete(request):
     try: 
-        if request.method == '':
+        getRegisteredEventData = EventRegister.objects.filter()
+        eventItems = []
+        
+        for item in getRegisteredEventData:
+            eventItems.append({
+                'ID': item.id,
+                'Event Name': item.title
+            })
+        if request.method == 'POST':
             pass
     
     except json.JSONDecodeError as error:
@@ -226,5 +234,6 @@ def event_delete(request):
     
     return JsonResponse({
         'Status': "Passed",
-        'Message': "Function working Fine"
+        'Message': eventItems
+        
     })
