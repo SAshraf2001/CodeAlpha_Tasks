@@ -1,5 +1,5 @@
 from django.urls import path
-from eventHandle.views import user_register, event_registeration, event_list, user_list, event_handle, regiseteredEvent_list, cancelEvent
+from eventHandle.views import user_register, event_registeration, event_list, user_list, event_handle, regiseteredEvent_list, cancelEvent, event_delete
 
 urlpatterns = [
     # Adding all the Event Handling app URL patterns here.
@@ -9,5 +9,6 @@ urlpatterns = [
     path('userList/', user_list, name='user_list'),
     path('e-handle/', event_handle, name='event_handle'),
     path('e-registered/', regiseteredEvent_list, name='registered_event'),
-    path('cancel/', cancelEvent, name='cancelEvent')
+    path('cancel/', cancelEvent, name='cancelEvent'),
+    path('delete/', event_delete, name='event_delete')
 ]
