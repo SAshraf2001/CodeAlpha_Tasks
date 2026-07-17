@@ -215,16 +215,22 @@ def cancelEvent(request):
 def event_update(request):
     pass
 
-
+@csrf_exempt
+@login_required
 def event_delete(request):
-    try: 
-        getRegisteredEventData = EventRegister.objects.filter()
-        eventItems = []
+    try:
+        if request.method == 'GET':
+            getRegisteredEventData = EventRegister.objects.filter()
+            eventItems = []
         
-        for item in getRegisteredEventData:
-            eventItems.append({
-                'ID': item.id,
-                'Event Name': item.title
+            for item in getRegisteredEventData:
+                eventItems.append({
+                    'ID': item.id,
+                    'Event Name': item.title
+                })
+            return JsonResponse({
+                'Status': "Data Extracted:",
+                'Message': eventItems
             })
         if request.method == 'POST':
             pass
@@ -234,6 +240,6 @@ def event_delete(request):
     
     return JsonResponse({
         'Status': "Passed",
-        'Message': eventItems
+        'Message': "URL is working"
         
     })
