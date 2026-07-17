@@ -217,4 +217,14 @@ def event_update(request):
 
 
 def event_delete(request):
-    pass
+    try: 
+        if request.method == '':
+            pass
+    
+    except json.JSONDecodeError as error:
+        pass
+    
+    return JsonResponse({
+        'Status': "Passed",
+        'Message': "Function working Fine"
+    })
