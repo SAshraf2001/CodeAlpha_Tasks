@@ -181,7 +181,35 @@ def regiseteredEvent_list(request):
 @csrf_exempt
 @login_required
 def cancelEvent(request):
-    pass
+    try:
+        if request.method == 'POST':
+            setData = json.loads(request.body)
+            getID = setData.get('Event ID')
+            try: 
+                userData = EventHandle.objects.get(registeredUser=request.user)
+                getEventData = EventHandle.objects.get(id=getID, userTicket=userData)
+            except EventHandle.DoesNotExist as error:
+                return JsonResponse({
+                    'Message': f'Exception Caught: ---> No user Found:{str(error)}'
+                })
+            leftSeats = 0
+            leftSeats = getEventData.seatingCapacity + leftSeats
+            getEventData.userTicket.capacity = leftSeats
+            getEventData.userTicket.save()
+            
+            getEventData.delete()
+            return JsonResponse({
+                'Status': "Passed",
+                'Message': "Successfully Cancelled the Event: {getEventData.userTicket.title} + Left Seats:{getEventData.userTicket.capacity}"
+            })
+    except json.JSONDecodeError as error:
+        return JsonResponse({
+            'Status': "Failed",
+            'Message': f"Exception Caught: Error ---> {str(error)}"
+        })
+    return JsonResponse({
+        'Message': 'URL is working'
+    })
 
 
 def event_update(request):
