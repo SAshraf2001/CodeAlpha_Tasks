@@ -187,7 +187,7 @@ def cancelEvent(request):
             getID = setData.get('Event ID')
             try: 
                 userData = UserRegister.objects.get(user=request.user)
-                getUserData = EventHandle.objects.get(registeredUser=userData)
+                getUserData = EventHandle.objects.filter(registeredUser=userData)
                 getEventData = EventHandle.objects.get(id=getID, userTicket=getUserData)
             except EventHandle.DoesNotExist as error:
                 return JsonResponse({
