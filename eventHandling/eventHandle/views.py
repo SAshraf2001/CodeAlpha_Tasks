@@ -187,14 +187,13 @@ def cancelEvent(request):
             getID = setData.get('Event ID')
             try: 
                 userData = UserRegister.objects.get(user=request.user)
-                getUserData = EventHandle.objects.filter(registeredUser=userData)
-                getEventData = EventHandle.objects.get(id=getID, userTicket=getUserData)
+                getEventData = EventHandle.objects.get(id=getID, registeredUser=userData)
             except EventHandle.DoesNotExist as error:
                 return JsonResponse({
                     'Message': f'Exception Caught: ---> No user Found:{str(error)}'
                 })
             leftSeats = 0
-            leftSeats = getEventData.seatingCapacity + leftSeats
+            leftSeats = getEventData.userTicket.capacity + getEventData.seatingCapacity
             getEventData.userTicket.capacity = leftSeats
             getEventData.userTicket.save()
             
