@@ -213,9 +213,17 @@ def cancelEvent(request):
         'Message': 'URL is working'
     })
 
-
+@csrf_exempt
+@login_required
 def event_update(request):
-    pass
+    try:
+        pass
+    except json.JSONDecodeError as error:
+        pass
+    return JsonResponse({
+        'Status': "Passed",
+        'Message': 'URL is working fine'
+    })
 
 @csrf_exempt
 @login_required
