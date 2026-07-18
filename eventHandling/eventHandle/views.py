@@ -217,7 +217,18 @@ def cancelEvent(request):
 @login_required
 def event_update(request):
     try:
-        pass
+        if request.method == 'POST':
+            logged_user = UserRegister.objects.filter(user=request.user)
+            added_role = []
+            for item in logged_user:
+                added_role.append({'Role': item.user.role.role_name})
+            return JsonResponse({
+                'Message': added_role   
+            })
+        if():
+            pass
+        else:
+           pass
     except json.JSONDecodeError as error:
         pass
     return JsonResponse({
