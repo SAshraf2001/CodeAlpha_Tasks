@@ -84,11 +84,11 @@ def event_registeration(request):
 @login_required
 def event_list(request):
     # All The Events are listed.
-    setData = EventRegister.objects.values('title', 'place', 'date', 'capacity')
+    setData = EventRegister.objects.values('title', 'place', 'date', 'capacity', 'totalCapacity')
     getData = list(setData)
     event_list = [] # Appending the Data that is extracted from the getData
     for item in getData:
-        event_list.append({'Name': item['title'], 'Place':item['place'], 'Date':item['date'], 'Capacity':item['capacity']})
+        event_list.append({'Name': item['title'], 'Place':item['place'], 'Date':item['date'], 'Capacity':item['capacity'], 'Total Capacity':item['totalCapacity']})
     return JsonResponse({
         'status': 'Passed',
         'Data': event_list
