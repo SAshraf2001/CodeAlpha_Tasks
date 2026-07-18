@@ -217,21 +217,24 @@ def cancelEvent(request):
 @login_required
 def event_update(request):
     try:
+        logged_user = UserRegister.objects.filter(user=request.user)
+        added_role = []
+        for item in logged_user:
+            added_role.append({'Role': item.user.role.role_name})
         if request.method == 'POST':
-            logged_user = UserRegister.objects.filter(user=request.user)
-            added_role = []
-            for item in logged_user:
-                added_role.append({'Role': item.user.role.role_name})
-            if(({"Role": 'isAdmin'}) != 'isAdmin'):
-                return JsonResponse({
-                    'Status': "Passed",
-                    'Message': f'Admin Found:'
-                })
-            else:
-                pass
+           if((added_role[0]['Role']) == 'isAdmin'):
+               return JsonResponse({
+                   'Status': 'Passed and Found',
+                   'Message': "Admin Logged In"
+               })
+        else:
             return JsonResponse({
-                'Message': f'Admin is Logged IN: {added_role[0]}'
+                'Message': "Only Admins can see this."
             })
+        return JsonResponse({
+            'Status': 'Test Passed',
+            'Message': f'Role Found:{added_role}'
+        })
     except json.JSONDecodeError as error:
         pass
     return JsonResponse({
