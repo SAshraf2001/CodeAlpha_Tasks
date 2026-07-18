@@ -195,11 +195,11 @@ def cancelEvent(request):
                     'Message': f'Exception Caught: ---> No user Found:{str(error)}'
                 })
             leftSeats = 0
-            leftSeats = getEventData.userTicket.capacity + getEventData.seatingCapacity
-            getEventData.userTicket.capacity = leftSeats
-            getEventData.userTicket.save()
-            
-            getEventData.delete()
+            if(getEventData.userTicket.capacity + getEventData.seatingCapacity <= getEventData.userTicket.totalCapacity):
+                leftSeats = getEventData.userTicket.capacity + getEventData.seatingCapacity
+                getEventData.userTicket.capacity = leftSeats
+                getEventData.userTicket.save()
+                getEventData.delete()
             return JsonResponse({
                 'Status': "Passed",
                 'Message': "Successfully Cancelled the Event: {getEventData.userTicket.title} + Left Seats:{getEventData.userTicket.capacity}"
