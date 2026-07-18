@@ -222,13 +222,16 @@ def event_update(request):
             added_role = []
             for item in logged_user:
                 added_role.append({'Role': item.user.role.role_name})
+            if(({"Role": 'isAdmin'}) != 'isAdmin'):
+                return JsonResponse({
+                    'Status': "Passed",
+                    'Message': f'Admin Found:'
+                })
+            else:
+                pass
             return JsonResponse({
-                'Message': added_role   
+                'Message': f'Admin is Logged IN: {added_role[0]}'
             })
-        if():
-            pass
-        else:
-           pass
     except json.JSONDecodeError as error:
         pass
     return JsonResponse({
