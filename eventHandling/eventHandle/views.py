@@ -223,6 +223,30 @@ def event_update(request):
             added_role.append({'Role': item.user.role.role_name})
         if request.method == 'POST':
            if((added_role[0]['Role']) == 'isAdmin'):
+               setData = json.loads(request.body)
+               updateEventID = setData.get('ID')
+               try:
+                   getEventData = EventRegister.objects.get(id=updateEventID)
+               except EventRegister.DoesNotExist:
+                   return JsonResponse({
+                       'Message': 'No Event with this ID found:'
+                   })
+               updateTitle = setData.get('Title')
+               updatePlace = setData.get('Place')
+               eventScheduled = setData.get('Event Date')
+               eventTime = datetime.strptime(eventScheduled, "%Y-%m-%d %H:%M:%S")
+               updateCapacity = int(setData.get('Capacity'))
+               updateTotalCapacity = int(setData.get('Total Capacity'))
+               if((updateCapacity <= updateTotalCapacity) and (getEventData.capacity <= getEventData.totalCapacity)):
+                getEventData.title = updateTitle
+                getEventData.place = updatePlace
+                getEventData.date = eventTime
+                getEventData.capacity = getEventData.capacity + updateCapacity
+                getEventData.totalCapacity = getEventData.totalCapacity + updateTotalCapacity
+                getEventData.save()
+                return JsonResponse({
+                    'Status': 'Event is Updated'
+                })
                return JsonResponse({
                    'Status': 'Passed and Found',
                    'Message': "Admin Logged In"
