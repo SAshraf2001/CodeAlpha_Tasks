@@ -256,8 +256,8 @@ def event_update(request):
                 'Message': "Only Admins can see this."
             })
         return JsonResponse({
-            'Status': 'Test Passed',
-            'Message': f'Role Found:{added_role}'
+            'Message': "Only Admins can see this Portal",
+            'Status': f'Role Found:{added_role}'
         })
     except json.JSONDecodeError as error:
         return JsonResponse({
