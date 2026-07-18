@@ -260,11 +260,9 @@ def event_update(request):
             'Message': f'Role Found:{added_role}'
         })
     except json.JSONDecodeError as error:
-        pass
-    return JsonResponse({
-        'Status': "Passed",
-        'Message': 'URL is working fine'
-    })
+        return JsonResponse({
+           'Status': str(error) 
+        })
 
 @csrf_exempt
 @login_required
