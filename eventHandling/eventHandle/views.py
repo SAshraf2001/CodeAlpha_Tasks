@@ -102,7 +102,7 @@ def user_list(request):
     # print(setUserData) Debugging...
     user_data = [] # Appending the Fetched data.
     for item in setUserData:
-        print(item.user.email)
+        # print(item.user.email)
         user_data.append({
             'First Name': item.firstName, 'Last Name': item.lastName, 'User Name':item.user.username, 'Email':item.user.email, 'Address':item.address, 'Contact Number': item.phoneNumber
         })
