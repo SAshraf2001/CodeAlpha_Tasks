@@ -59,7 +59,7 @@ def event_registeration(request):
             eventTime = datetime.strptime(eventScheduled, "%Y-%m-%d %H:%M:%S")
             capacity = setEventData.get('Event Capacity')
             totalCapacity = setEventData.get('Total Capacity')
-            registeredEvent = EventRegister.objects.create(title=titleName, place=eventPlace, date=eventTime, capacity=capacity)
+            registeredEvent = EventRegister.objects.create(title=titleName, place=eventPlace, date=eventTime, capacity=capacity, totalCapacity=totalCapacity)
             
             registeredEvent.save()
             return JsonResponse({
@@ -67,7 +67,8 @@ def event_registeration(request):
                 'EventTitle': titleName,
                 'Event Place': eventPlace,
                 'Event Date': eventTime,
-                'Seating Capacity': capacity
+                'Seating Capacity': capacity,
+                'Total Capacity': totalCapacity
                 })
     except json.JSONDecodeError as error: 
         return JsonResponse({
