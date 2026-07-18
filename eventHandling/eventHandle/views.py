@@ -200,10 +200,10 @@ def cancelEvent(request):
                 getEventData.userTicket.capacity = leftSeats
                 getEventData.userTicket.save()
                 getEventData.delete()
-            return JsonResponse({
-                'Status': "Passed",
-                'Message': f"Successfully Cancelled the Event: {getEventData.userTicket.title} + Left Seats:{getEventData.userTicket.capacity}"
-            })
+                return JsonResponse({
+                    'Status': "Passed",
+                    'Message': f"Successfully Cancelled the Event: {getEventData.userTicket.title} + Left Seats:{getEventData.userTicket.capacity}"
+                })
     except json.JSONDecodeError as error:
         return JsonResponse({
             'Status': "Failed",
