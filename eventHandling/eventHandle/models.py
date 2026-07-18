@@ -9,7 +9,7 @@ class EventRegister(models.Model):
     place = models.CharField(max_length=50, null=False, blank=False, help_text="Enter the Event's Place:")
     date = models.DateTimeField(default=timezone.now)
     capacity = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
-    
+    totalCapacity = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
     
     def __str__(self):
         return self.title;
