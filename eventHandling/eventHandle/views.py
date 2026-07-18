@@ -58,6 +58,7 @@ def event_registeration(request):
             eventScheduled = setEventData.get('Event Date')
             eventTime = datetime.strptime(eventScheduled, "%Y-%m-%d %H:%M:%S")
             capacity = setEventData.get('Event Capacity')
+            totalCapacity = setEventData.get('Total Capacity')
             registeredEvent = EventRegister.objects.create(title=titleName, place=eventPlace, date=eventTime, capacity=capacity)
             
             registeredEvent.save()
