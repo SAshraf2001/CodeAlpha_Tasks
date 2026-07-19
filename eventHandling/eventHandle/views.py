@@ -217,51 +217,53 @@ def cancelEvent(request):
 @login_required
 def event_update(request):
     try:
-        logged_user = UserRegister.objects.filter(user=request.user)
-        added_role = []
-        for item in logged_user:
-            added_role.append({'Role': item.user.role.role_name})
-        if request.method == 'POST':
-           if((added_role[0]['Role']) == 'isAdmin'):
-               setData = json.loads(request.body)
-               updateEventID = setData.get('ID')
-               try:
-                   getEventData = EventRegister.objects.get(id=updateEventID)
-               except EventRegister.DoesNotExist:
-                   return JsonResponse({
-                       'Message': 'No Event with this ID found:'
-                   })
-               updateTitle = setData.get('Title')
-               updatePlace = setData.get('Place')
-               eventScheduled = setData.get('Event Date')
-               eventTime = datetime.strptime(eventScheduled, "%Y-%m-%d %H:%M:%S")
-               updateCapacity = int(setData.get('Capacity'))
-               updateTotalCapacity = int(setData.get('Total Capacity'))
-               if((updateCapacity <= updateTotalCapacity) and (getEventData.capacity <= getEventData.totalCapacity)):
-                getEventData.title = updateTitle
-                getEventData.place = updatePlace
-                getEventData.date = eventTime
-                getEventData.capacity = getEventData.capacity + updateCapacity
-                getEventData.totalCapacity = getEventData.totalCapacity + updateTotalCapacity
-                getEventData.save()
-                return JsonResponse({
-                    'Status': 'Event is Updated'
-                })
-               return JsonResponse({
-                   'Status': 'Passed and Found',
-                   'Message': "Admin Logged In"
-               })
-        else:
+        loggedUser = UserRegister.objects.filter(user=request.user)
+        addedRole = [] # Role being append to the empty list that is being fetched.
+        for item in loggedUser:
+            item.append({'Role': item.user.role.role_name})
+        if (({'Role': "isAdmin"}) == 'isAdmin'):
+            if request.method == 'POST':
+                setData = json.loads(request.body)
+                eventId = int(setData.get('ID'))
+                
+                try:
+                    getEventData = EventRegister.objects.get(id=eventId)
+                except EventRegister.DoesNotExist:
+                    return JsonResponse({
+                        'Message': 'No Data Found:'
+                    })
+                updateTitle = setData.get('Title')
+                updatePlace = setData.get('Place')
+                updateEvent = setData.get('Event Data')
+                eventTime = datetime.strptime(updateEvent, "%Y-%m-%d %H:%M:%S")
+                updateCapacity = int(setData.get('Capacity'))
+                updateTotalCapacity = int(setData.get('Total Capacity'))
+                
+                if((updateCapacity <= updateTotalCapacity) and (getEventData.capacity <= getEventData.totalCapacity)):
+                    
+                    getEventData.title = updateTitle
+                    getEventData.place = updatePlace
+                    getEventData.date = eventTime
+                    getEventData.capacity = getEventData.capacity + updateCapacity
+                    getEventData.totalCapacity = getEventData.totalCapacity + updateTotalCapacity
+                    
+                    getEventData.save()
+                    return JsonResponse({
+                        "Message": "Event Is Updated."
+                    })
+                else:
+                    return JsonResponse({
+                        'Message': 'Conditions Must be Fulfilled:'
+                    })
+                
+        else: 
             return JsonResponse({
-                'Message': "Only Admins can see this."
-            })
+                'Status': "Request Could not be extracted",
+                'Message': f"Only Admins can logged into it {addedRole}"
+            })        
+    except json.JSONDecodeError as err:
         return JsonResponse({
-            'Message': "Only Admins can see this Portal",
-            'Status': f'Role Found:{added_role}'
-        })
-    except json.JSONDecodeError as error:
-        return JsonResponse({
-           'Status': str(error) 
+            'Message': f"Exception Caught: ---> Error in the Try logic:{str(err)}"
         })
 
 @csrf_exempt
