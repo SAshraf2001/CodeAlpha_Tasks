@@ -220,7 +220,7 @@ def event_update(request):
         loggedUser = UserRegister.objects.filter(user=request.user)
         addedRole = [] # Role being append to the empty list that is being fetched.
         for item in loggedUser:
-            item.append({'Role': item.user.role.role_name})
+            addedRole.append({'Role': item.user.role.role_name})
         if (({'Role': "isAdmin"}) == 'isAdmin'):
             if request.method == 'POST':
                 setData = json.loads(request.body)
