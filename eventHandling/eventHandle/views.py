@@ -239,7 +239,11 @@ def event_update(request):
                 updateCapacity = int(setData.get('Capacity'))
                 updateTotalCapacity = int(setData.get('Total Capacity'))
                 
-                if((updateCapacity <= updateTotalCapacity) and (getEventData.capacity <= getEventData.totalCapacity)):
+                is_math_valid = updateCapacity <= updateTotalCapacity
+                is_within_limits = (getEventData.capacity + updateCapacity <= getEventData.totalCapacity + updateTotalCapacity)
+                is_non_negatives = (getEventData.capacity + updateCapacity >= 0)
+                
+                if((is_math_valid) and (is_within_limits) and (is_non_negatives)):
                     
                     getEventData.title = updateTitle
                     getEventData.place = updatePlace
