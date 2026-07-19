@@ -217,6 +217,7 @@ def cancelEvent(request):
 
 @csrf_exempt
 @login_required
+# The Admin Logic is done by If/Else
 def event_update(request):
     try:
         loggedUser = UserRegister.objects.filter(user=request.user)
