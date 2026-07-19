@@ -221,7 +221,7 @@ def event_update(request):
         addedRole = [] # Role being append to the empty list that is being fetched.
         for item in loggedUser:
             addedRole.append({'Role': item.user.role.role_name})
-        if (({'Role': "isAdmin"}) == 'isAdmin'):
+        if ((addedRole[0]['Role']) == 'isAdmin'):
             if request.method == 'POST':
                 setData = json.loads(request.body)
                 eventId = int(setData.get('ID'))
@@ -234,7 +234,7 @@ def event_update(request):
                     })
                 updateTitle = setData.get('Title')
                 updatePlace = setData.get('Place')
-                updateEvent = setData.get('Event Data')
+                updateEvent = setData.get('Event Date')
                 eventTime = datetime.strptime(updateEvent, "%Y-%m-%d %H:%M:%S")
                 updateCapacity = int(setData.get('Capacity'))
                 updateTotalCapacity = int(setData.get('Total Capacity'))
