@@ -6,6 +6,7 @@ from eventHandle.models import EventRegister, UserRegister, EventHandle
 from datetime import datetime
 import json
 from django.contrib.auth.decorators import login_required
+from eventHandle.decorators import admin_required
 # Create your views here.
 
 
@@ -182,6 +183,7 @@ def regiseteredEvent_list(request):
 
 @csrf_exempt
 @login_required
+@admin_required
 def cancelEvent(request):
     try:
         if request.method == 'POST':
@@ -272,6 +274,7 @@ def event_update(request):
 
 @csrf_exempt
 @login_required
+@admin_required
 def event_delete(request):
     try:
         if request.method == 'GET':
