@@ -65,7 +65,7 @@ def loginView(request):
                     return JsonResponse({
                         'status': 'Login Confirmed, User is Loggedin Successfully:',
                         'User_name': user.username, 
-                        'Role Status': f'Role: {role.roleName}',
+                        'Role Status': f'Role: {role}',
                         'Token Key': request.session.session_key
                     })
             else:
