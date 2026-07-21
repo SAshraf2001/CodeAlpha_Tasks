@@ -14,6 +14,9 @@ def registeredUser(request):
             password = setData.get('Password')
             userRole = setData.get('User Role')
             
+            #user_role, created = Role.objects.get_or_create(roleName = userRole)
+            #role = Role.objects.create(roleName=user_role)
+            
             user_role = Role.objects.filter(roleName = userRole)
             if user_role.exists():
                 user_role = user_role.first()
