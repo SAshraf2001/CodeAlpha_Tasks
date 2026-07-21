@@ -78,3 +78,8 @@ def loginView(request):
             'Status': 'Failed',
             'Message': f"Error ---> CaughtException {str(err)}"
         })
+
+
+@csrf_exempt
+def logout_user(request):
+    pass
