@@ -12,6 +12,3 @@ class User(AbstractUser):
     role = models.ForeignKey(Role, on_delete=models.CASCADE, null=True, blank=True, related_name='users', help_text='Select the Desired Role for the User:')
     
     REQUIRED_FIELDS=['email']
-    
-    def __str__(self):
-        return self.userName
