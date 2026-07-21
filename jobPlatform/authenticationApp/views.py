@@ -46,3 +46,35 @@ def registeredUser(request):
         'Status': 'Passed and Completed',
         'Message': 'URL is working.'
     })
+    
+
+@csrf_exempt
+def loginView(request):
+    try:
+        if request.method == 'POST':
+            setData = json.loads(request.body)
+            username = setData.get('User Name')
+            password = setData.get('Password')
+            userRole = setData.get('Role')
+            role = Role.objects.filter(roleName=userRole).filter()
+            
+            if ((username) and (password) and userRole):
+                user = authenticate(username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    return JsonResponse({
+                        'status': 'Login Confirmed, User is Loggedin Successfully:',
+                        'User_name': user.username, 
+                        'Role Status': f'Role: {role}',
+                        'Token Key': request.session.session_key
+                    })
+            else:
+                return JsonResponse({
+                    'Status': 'Login Failed',
+                    'Message': 'No User Found with such username'
+                })
+    except json.JSONDecodeError as err:
+        return JsonResponse({
+            'Status': 'Failed',
+            'Message': f"Error ---> CaughtException {str(err)}"
+        })
