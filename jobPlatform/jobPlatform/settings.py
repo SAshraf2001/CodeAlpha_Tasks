@@ -119,3 +119,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+LOGIN_URL = '/login/'
+
+AUTH_USER_MODEL = 'authenticationApp.User' # Assigning the remaining values of the model UserProfile to the default User model of Django. This is done to extend the default User model with additional fields.
