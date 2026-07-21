@@ -1,10 +1,11 @@
 import json
 from django.shortcuts import render
 from authenticationApp.models import User, Role
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 # Create your views here.
 
-
+@csrf_exempt
 def registeredUser(request):
     try:
         if request.method == 'POST':
