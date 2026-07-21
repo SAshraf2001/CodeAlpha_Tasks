@@ -1,7 +1,7 @@
 from django.urls import path
 
-from authenticationApp.views import home_view
+from authenticationApp.views import registeredUser
 
-urlpatterns = [
-    path('', home_view, name='home_view')
+url_patterns = [
+    path('sign-up/', registeredUser, name='registeredUser')
 ]
