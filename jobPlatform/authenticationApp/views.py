@@ -83,10 +83,20 @@ def loginView(request):
 @csrf_exempt
 def logout_user(request):
     try:
-        pass
-    except json.JSONDecodeError as err:
-        pass
-    return JsonResponse({
-        'Status': 'Sign-out Test Passed',
-        'Message': "URL Works Fine"
-    })
+        if request.method == 'POST':
+            loggedUser = request.user.username
+        
+        if (loggedUser): 
+            logout(request)
+            return JsonResponse({
+                'Status': 'User Successfully Logged Out:',
+                'Message': f'User ---> {loggedUser}'
+            })
+        else:
+            return JsonResponse({
+                'Message': f"No User with the requested {loggedUser}: username found"
+            })
+    except json.JSONDecodeError as error:
+        return JsonResponse({
+            'Status': f"Failed, {str(error)}",
+        })    
