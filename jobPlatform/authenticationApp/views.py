@@ -3,8 +3,9 @@ from django.shortcuts import render
 from authenticationApp.models import User, Role
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-# Create your views here.
+from django.contrib.auth import authenticate, login, logout
 
+# Create your views here.
 @csrf_exempt
 def registeredUser(request):
     try:
