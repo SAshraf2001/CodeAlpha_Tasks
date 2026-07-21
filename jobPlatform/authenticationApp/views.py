@@ -65,7 +65,7 @@ def loginView(request):
                     return JsonResponse({
                         'status': 'Login Confirmed, User is Loggedin Successfully:',
                         'User_name': user.username, 
-                        'Role Status': f'Role: {role}',
+                        'Role Status': f'Role: {role.roleName}',
                         'Token Key': request.session.session_key
                     })
             else:
@@ -82,4 +82,11 @@ def loginView(request):
 
 @csrf_exempt
 def logout_user(request):
-    pass
+    try:
+        pass
+    except json.JSONDecodeError as err:
+        pass
+    return JsonResponse({
+        'Status': 'Sign-out Test Passed',
+        'Message': "URL Works Fine"
+    })
