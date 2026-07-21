@@ -81,7 +81,7 @@ def loginView(request):
 
 
 @csrf_exempt
-def logout_user(request):
+def logoutUser(request):
     try:
         if request.method == 'POST':
             loggedUser = request.user.username
