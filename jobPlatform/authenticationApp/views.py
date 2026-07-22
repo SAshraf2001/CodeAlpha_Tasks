@@ -78,6 +78,10 @@ def loginView(request):
             'Status': 'Failed',
             'Message': f"Error ---> CaughtException {str(err)}"
         })
+    return JsonResponse({
+        'Status': 'Passed',
+        'Message': "URL Works Completely Fine"
+    })
 
 
 @csrf_exempt
