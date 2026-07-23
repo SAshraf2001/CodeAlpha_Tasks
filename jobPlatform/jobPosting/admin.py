@@ -4,9 +4,9 @@ from jobPosting.models import UserProfile, jobPosting
 # Register your models here.
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('id', 'Username')
+    list_display = ('id', 'user')
     
 
-@admin.regist(jobPosting)
+@admin.register(jobPosting)
 class jobPostingAdmin(admin.ModelAdmin):
     list_display = ('id', 'Title', 'Job Description')
