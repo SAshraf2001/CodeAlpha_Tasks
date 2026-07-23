@@ -11,11 +11,10 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
@@ -124,3 +123,6 @@ STATIC_URL = 'static/'
 LOGIN_URL = '/login/'
 
 AUTH_USER_MODEL = 'authenticationApp.User' # Assigning the remaining values of the model UserProfile to the default User model of Django. This is done to extend the default User model with additional fields.
+
+MEDIA_URL = '/media/' # Media URL so that the browser can take images successfully.
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Root Directory to save the images successfully.
