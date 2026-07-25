@@ -17,3 +17,19 @@ def userRegisteration(request):
         'Status': 'Passed',
         'Message': "URL is Working Fine"
     })
+    
+
+def create_job_posting(request):
+    pass
+
+def search_job_listings(request):
+    pass
+
+def upload_resumes(request):
+    pass
+
+def apply_job(request):
+    pass
+
+def track_application(request):
+    pass
