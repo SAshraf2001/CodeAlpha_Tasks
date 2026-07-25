@@ -9,4 +9,4 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 @admin.register(jobPosting)
 class jobPostingAdmin(admin.ModelAdmin):
-    list_display = ('id', 'Title', 'Job Description')
+    list_display = ('id', 'jobTitle', 'jobDescription')
