@@ -27,7 +27,7 @@ class JobStatus(models.Model):
 class jobPosting(models.Model):
     jobTitle = models.CharField(max_length=230, blank=False, null=False)
     jobDescription = models.CharField(max_length=300, blank=False, null=False, help_text='Enter the Job Description')
-    experienceLevel = models.CharField(max_length=5, blank=False, null=False)
+    experienceLevel = models.CharField(max_length=15, blank=False, null=False)
     empType = models.ForeignKey(EmployeeType, on_delete=models.CASCADE, related_name='emp_type')
     companyName = models.CharField(max_length=200, null=False, blank=False, help_text='Enter Company Name')
     companyAddress = models.CharField(max_length=300, null=False, blank=False, help_text='Enter the Address')
