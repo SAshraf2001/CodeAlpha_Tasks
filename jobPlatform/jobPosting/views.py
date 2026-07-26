@@ -18,7 +18,6 @@ def userRegisteration(request):
             
         if ((address) and (contactNumber) and (resume) and (userBio) and (profilePicture) and (portfolio) and (logged_user)):    
             UserProfile.objects.create(user=logged_user, address=address, phone_number=contactNumber, resume=resume, profile_picture=profilePicture, bio=userBio, portfolio_url = portfolio)
-            
             return JsonResponse({
                 'Status': 'Saved Successfully',
                 'Name': logged_user.username,
@@ -26,6 +25,15 @@ def userRegisteration(request):
                 'Phone Number': contactNumber,
                 'User Bio': userBio,
             })
+        else:
+            return JsonResponse({
+                'Status': "Failed to Save the Data",
+                'Message': "All the Fields must be filled"
+            })
+    
+    return JsonResponse({
+        'Status': "Url Works Fine"
+    })
     
 
 def create_job_posting(request):
