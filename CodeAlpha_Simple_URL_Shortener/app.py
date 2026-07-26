@@ -1,7 +1,7 @@
 import sqlite3
 import string
 import random
-from flask import Flask, render_template, request, redirect
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
@@ -19,38 +19,40 @@ def init_db():
 def generate_short_id(num_of_chars=6):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=num_of_chars))
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    if request.method == 'POST':
-        url = request.form['url']
-        if not url:
-            return render_template('index.html', error='Please enter a URL.')
-        
-        conn = get_db_connection()
+# API Endpoint to create a short URL
+@app.route('/api/shorten', methods=['POST'])
+def shorten_url():
+    data = request.get_json()
+    original_url = data.get('url')
+    
+    if not original_url:
+        return jsonify({'error': 'URL is required'}), 400
+    
+    conn = get_db_connection()
+    short_id = generate_short_id()
+    
+    # Ensure unique short_id
+    while conn.execute('SELECT * FROM urls WHERE short_url = ?', (short_id,)).fetchone() is not None:
         short_id = generate_short_id()
         
-        while conn.execute('SELECT * FROM urls WHERE short_url = ?', (short_id,)).fetchone() is not None:
-            short_id = generate_short_id()
-            
-        conn.execute('INSERT INTO urls (original_url, short_url) VALUES (?, ?)', (url, short_id))
-        conn.commit()
-        conn.close()
-        
-        short_url = request.host_url + short_id
-        return render_template('index.html', short_url=short_url)
+    conn.execute('INSERT INTO urls (original_url, short_url) VALUES (?, ?)', (original_url, short_id))
+    conn.commit()
+    conn.close()
     
-    return render_template('index.html')
+    return jsonify({'short_url': f"{request.host_url}{short_id}"}), 201
 
-@app.route('/<short_id>')
+# Endpoint to resolve the short URL
+@app.route('/<short_id>', methods=['GET'])
 def redirect_url(short_id):
     conn = get_db_connection()
     url_data = conn.execute('SELECT original_url FROM urls WHERE short_url = ?', (short_id,)).fetchone()
     conn.close()
     
     if url_data:
-        return redirect(url_data['original_url'])
+        # Returning a JSON response for the redirect or handled by frontend
+        return jsonify({'original_url': url_data['original_url']}), 200
     else:
-        return 'URL not found', 404
+        return jsonify({'error': 'URL not found'}), 404
 
 if __name__ == '__main__':
     init_db()
