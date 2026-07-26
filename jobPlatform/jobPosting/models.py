@@ -19,7 +19,10 @@ class UserProfile(models.Model):
 
 
 class EmployeeType(models.Model):
-    pass
+    employeeType = models.CharField(max_length=100, blank=False, null=False, help_text='Enter the Employee Type', choices=[('full-time', "FullTime"), ('part-time', "PartTime"), ('contract', 'Contract Based'), ('intern', 'Internship')])
+    
+    def __str__(self):
+        return self.id;
 
 class JobStatus(models.Model):
     pass
