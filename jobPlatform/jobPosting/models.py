@@ -22,10 +22,13 @@ class EmployeeType(models.Model):
     employeeType = models.CharField(max_length=100, blank=False, null=False, help_text='Enter the Employee Type', choices=[('full-time', "FullTime"), ('part-time', "PartTime"), ('contract', 'Contract Based'), ('intern', 'Internship')])
     
     def __str__(self):
-        return self.id;
+        return self.employeeType;
 
 class JobStatus(models.Model):
-    pass
+    job_status = models.CharField(max_length=100, null=False, blank=False, help_text='Enter the Job Status', choices=[('is-active', 'Active'), ('close', 'Closed'), ('under-review', 'UnderReview'), ('draft', 'Draft')])
+    
+    def __str__(self):
+        return self.job_status;
     
 class jobPosting(models.Model):
     jobTitle = models.CharField(max_length=230, blank=False, null=False)
@@ -35,7 +38,7 @@ class jobPosting(models.Model):
     companyName = models.CharField(max_length=200, null=False, blank=False, help_text='Enter Company Name')
     companyAddress = models.CharField(max_length=300, null=False, blank=False, help_text='Enter the Address')
     salaryPackage = models.CharField(max_length=10, null=False, blank=False, help_text='Enter the Salary Package')
-    jobStatus = models.ForeignKey(JobStatus, on_delete=models.CASCADE, related_name='job_status')
+    jobStatus = models.ForeignKey(JobStatus, on_delete=models.CASCADE, related_name='jobStatus')
     jobAuthor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='authors')
     supportingDocuments = models.FileField(upload_to='supportDocs/', blank=True, null=True)
     createdAt = models.DateTimeField(default=timezone.now)
