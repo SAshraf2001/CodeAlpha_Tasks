@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 @csrf_exempt
+@login_required
 def userRegisteration(request):
     if request.method == 'POST':
         logged_user = request.user
@@ -40,6 +41,7 @@ def userRegisteration(request):
     
 
 @csrf_exempt
+@login_required
 def create_job_posting(request):
     if request.method == 'POST':
         loggedUser = request.user
