@@ -48,29 +48,31 @@ def create_job_posting(request):
         jobTitle = request.POST['Job Title']
         jobDescription = request.POST['Job Description']
         experience_level = request.POST['Experience Level']
-        emp_type = request.POST['Employee Type']
+        employeeType = request.POST['Employee Type']
+        emp_type = employeeType
         empType = EmployeeType.objects.filter(employeeType=emp_type)
         if empType.exists():
             empType = empType.first()
         else:
-            EmployeeType.objects.create(employeeType=emp_type)
+            empType = EmployeeType.objects.create(employeeType=emp_type)
+            empType.save()
         company_name = request.POST['Company Name']
         company_address = request.POST['Company Address']
         salary_package = request.POST['Salary Package']
-        job_status = request.POST['Job Status']
+        status = request.POST['Job Status']
+        job_status = status
         jobStatus = JobStatus.objects.filter(job_status=job_status)
         created_at = request.POST['Starting Date']
         createdAt = datetime.strptime(created_at, "%Y-%m-%d %H:%M:%S")
         expired_at = request.POST['Expiry Date']
         expiredAt = datetime.strptime(expired_at,"%Y-%m-%d %H:%M:%S" )
-        supporting_docs = request.FILES('Supporting Docs')
-        jobStatus = JobStatus.objects.filter(job_status=job_status)        
+        supporting_docs = request.FILES['Supporting Docs']     
         if jobStatus.exists():
             jobStatus = jobStatus.first()
         else:
             JobStatus.objects.create(job_status=job_status)
         if ((jobTitle) and (jobDescription) and (experience_level) and (emp_type) and (company_name) and (company_address) and (salary_package) and(job_status) and (created_at) and (supporting_docs) and (expired_at)):
-            jobPosting.objects.create(jobTitle=jobTitle, jobDescription=jobDescription, experienceLevel=experience_level, emp_type=empType, jobAuthor=loggedUser, createdAt=createdAt, expiredDate=expiredAt, supportingDocuments=supporting_docs, salaryPackage=salary_package, companyName=company_name, companyAddress=company_address, jobStatus=jobStatus) 
+            jobPosting.objects.create(jobTitle=jobTitle, jobDescription=jobDescription, experienceLevel=experience_level, empType=empType, jobAuthor=loggedUser, createdAt=createdAt, expiredDate=expiredAt, supportingDocuments=supporting_docs, salaryPackage=salary_package, companyName=company_name, companyAddress=company_address, jobStatus=jobStatus) 
             return JsonResponse({
                 'Message': "Successfully Created New Job",
                 'Job Name': jobTitle,
