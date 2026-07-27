@@ -37,7 +37,13 @@ def userRegisteration(request):
     
 
 def create_job_posting(request):
-    pass
+    if request.method == 'POST':
+        loggedUser = request.user
+    
+    return JsonResponse({
+        'Status': 'Passed',
+        'Message': "URL works Fine"
+    })
 
 def search_job_listings(request):
     pass
