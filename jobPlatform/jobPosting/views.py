@@ -88,8 +88,53 @@ def create_job_posting(request):
         'Message': "URL works Fine"
     })
 
+@csrf_exempt
+@login_required
 def search_job_listings(request):
-    pass
+    getJobData = jobPosting.objects.values('id', 'jobTitle', 'jobDescription')
+    job_data = [] # To fill with with the extracted Data
+    for item in getJobData:
+        job_data.append({
+            'Id': item['id'],
+            'Job Title': item['jobTitle'],
+            'Description': item['jobDescription']
+        })
+    try:
+        if request.method == 'POST':
+            setData = json.loads(request.body)
+            searchName = setData.get('Job Name')
+            searchId = setData.get('Search Id')
+            
+            if((searchName) and (searchId)):
+                getJob = jobPosting.objects.filter(jobTitle=searchName)
+                get_job_data = [] # Assigning the Extracted Data.
+                for item in getJob:
+                    get_job_data.append({
+                        'Title': item.jobTitle,
+                        'jobDescription': item.jobDescription,
+                        'Company Name': item.companyName,
+                        'Company Address': item.companyAddress,
+                        'Experience Level': item.experienceLevel,
+                        'Salary Package': item.salaryPackage,
+                        'Job Status': item.jobStatus.job_status
+                    })
+                return JsonResponse({
+                    'Message': f"Job Found: --->{searchName} && {searchId}",
+                    'Details': get_job_data
+                })
+            else:
+                return JsonResponse({
+                    'Message': f'No Job Found with the specifice {searchName}'
+                })
+    except json.JSONDecodeError as err:
+        return JsonResponse({
+            'Status': 'Failed',
+            'Message': f"Exception Caught: ---> {str(err)}"
+        })
+    return JsonResponse({
+        'Status': "Passed",
+        'Message': job_data
+    })
 
 def upload_resumes(request):
     pass
