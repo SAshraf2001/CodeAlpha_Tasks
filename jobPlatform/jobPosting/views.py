@@ -39,7 +39,6 @@ def userRegisteration(request):
         'Status': "Url Works Fine"
     })
     
-
 @csrf_exempt
 @login_required
 def create_job_posting(request):
