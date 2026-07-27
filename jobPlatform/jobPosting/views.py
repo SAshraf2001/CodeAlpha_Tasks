@@ -4,6 +4,9 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from jobPosting.models import UserProfile, JobStatus, jobPosting, EmployeeType
 
+from datetime import datetime
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 @csrf_exempt
 def userRegisteration(request):
@@ -36,10 +39,47 @@ def userRegisteration(request):
     })
     
 
+@csrf_exempt
 def create_job_posting(request):
     if request.method == 'POST':
         loggedUser = request.user
-    
+        jobTitle = request.POST['Job Title']
+        jobDescription = request.POST['Job Description']
+        experience_level = request.POST['Experience Level']
+        emp_type = request.POST['Employee Type']
+        empType = EmployeeType.objects.filter(employeeType=emp_type)
+        if empType.exists():
+            empType = empType.first()
+        else:
+            EmployeeType.objects.create(employeeType=emp_type)
+        company_name = request.POST['Company Name']
+        company_address = request.POST['Company Address']
+        salary_package = request.POST['Salary Package']
+        job_status = request.POST['Job Status']
+        jobStatus = JobStatus.objects.filter(job_status=job_status)
+        created_at = request.POST['Starting Date']
+        createdAt = datetime.strptime(created_at, "%Y-%m-%d %H:%M:%S")
+        expired_at = request.POST['Expiry Date']
+        expiredAt = datetime.strptime(expired_at,"%Y-%m-%d %H:%M:%S" )
+        supporting_docs = request.FILES('Supporting Docs')
+        jobStatus = JobStatus.objects.filter(job_status=job_status)        
+        if jobStatus.exists():
+            jobStatus = jobStatus.first()
+        else:
+            JobStatus.objects.create(job_status=job_status)
+        if ((jobTitle) and (jobDescription) and (experience_level) and (emp_type) and (company_name) and (company_address) and (salary_package) and(job_status) and (created_at) and (supporting_docs) and (expired_at)):
+            jobPosting.objects.create(jobTitle=jobTitle, jobDescription=jobDescription, experienceLevel=experience_level, emp_type=empType, jobAuthor=loggedUser, createdAt=createdAt, expiredDate=expiredAt, supportingDocuments=supporting_docs, salaryPackage=salary_package, companyName=company_name, companyAddress=company_address, jobStatus=jobStatus) 
+            return JsonResponse({
+                'Message': "Successfully Created New Job",
+                'Job Name': jobTitle,
+                'Company Name': company_name
+            })
+        else:
+            return JsonResponse({
+                'Status': "Failed to create a new Job",
+                'Message': "Must filled all the input Fields"
+            })
+        
     return JsonResponse({
         'Status': 'Passed',
         'Message': "URL works Fine"
