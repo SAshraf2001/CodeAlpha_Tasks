@@ -1,6 +1,6 @@
 import json
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from jobPosting.models import UserProfile, JobStatus, jobPosting, EmployeeType, jobApply
 from datetime import datetime
@@ -144,15 +144,33 @@ def search_job_listings(request):
 
 @csrf_exempt
 @login_required
-@admin_required
 @employee_required
 def apply_job(request):
-    pass
-
-@csrf_exempt
-@login_required
-def upload_resumes(request):
-    pass
+    try:
+        if request.method == 'POST':
+            loggedUser = request.user
+            getId = request.POST['Get Id']
+            getJobData = get_object_or_404(jobPosting, id=getId)
+            if ((getJobData.jobStatus) == 'is-active'):
+                jobName = request.POST['Job Name']
+                resume = request.FILES['Resume']
+                jobApply.objects.create(job=getJobData, jobUser=loggedUser, jobName=jobName, resume_upload=resume)
+                return JsonResponse({
+                    'Status': "Applied Successfully:",
+                    'Job Name': jobName,
+                })
+            else:
+                return JsonResponse({
+                    'Message': "The Job must have Active Status"
+                })
+    except json.JSONDecodeError as err:
+        return JsonResponse({
+            'Message': f"Exception Occured: Error ---> {str(err)}"
+        })
+    return JsonResponse({
+        'Status': "Passed",
+        'Message': "URL works fine"
+    })
 
 def track_application(request):
     pass
