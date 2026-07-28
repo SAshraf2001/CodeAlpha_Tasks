@@ -2,11 +2,10 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.http import JsonResponse
-from jobPosting.models import UserProfile, JobStatus, jobPosting, EmployeeType
-
+from jobPosting.models import UserProfile, JobStatus, jobPosting, EmployeeType, jobApply
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
-
+from jobPosting.decorators import admin_required, recruiter_required, employee_required
 # Create your views here.
 @csrf_exempt
 @login_required
@@ -136,10 +135,14 @@ def search_job_listings(request):
         'Message': job_data
     })
 
-def upload_resumes(request):
+@csrf_exempt
+@login_required
+def apply_job(request):
     pass
 
-def apply_job(request):
+@csrf_exempt
+@login_required
+def upload_resumes(request):
     pass
 
 def track_application(request):
