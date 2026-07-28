@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from jobPosting.models import UserProfile, JobStatus, jobPosting, EmployeeType, jobApply
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
-from jobPosting.decorators import admin_required, recruiter_required, employee_required
+from jobPosting.decorators import admin_required, staff_required, employee_required
 # Create your views here.
 @csrf_exempt
 @login_required
@@ -40,7 +40,7 @@ def userRegisteration(request):
     
 @csrf_exempt
 @login_required
-@recruiter_required
+@staff_required
 def create_job_posting(request):
     if request.method == 'POST':
         loggedUser = request.user
