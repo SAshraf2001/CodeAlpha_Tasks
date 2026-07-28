@@ -2,31 +2,34 @@ from functools import wraps
 from django.core.exceptions import PermissionDenied
 
 def admin_required(view_func):
-    
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
-        # ADAPT THIS: Change 'request.user.role' to match your actual model logic
-        if request.user.is_authenticated and request.user.role == 'admin':
+        # Checks if user is logged in, has a role assigned, and that role is 'isAdmin'
+        if (request.user.is_authenticated and 
+            request.user.role and 
+            request.user.role.roleName == 'isAdmin'):
             return view_func(request, *args, **kwargs)
         raise PermissionDenied
     return _wrapped_view
 
 def recruiter_required(view_func):
-    
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
-        # ADAPT THIS: Change 'request.user.role' to match your actual model logic
-        if request.user.is_authenticated and request.user.role == 'recruiter':
+        # Checks if user is logged in, has a role assigned, and that role is 'isRecruiter'
+        if (request.user.is_authenticated and 
+            request.user.role and 
+            request.user.role.roleName == 'isRecruiter'):
             return view_func(request, *args, **kwargs)
         raise PermissionDenied
     return _wrapped_view
 
 def employee_required(view_func):
-    
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
-        # ADAPT THIS: Change 'request.user.role' to match your actual model logic
-        if request.user.is_authenticated and request.user.role == 'employee':
+        # Checks if user is logged in, has a role assigned, and that role is 'isEmployee'
+        if (request.user.is_authenticated and 
+            request.user.role and 
+            request.user.role.roleName == 'isEmployee'):
             return view_func(request, *args, **kwargs)
         raise PermissionDenied
     return _wrapped_view
