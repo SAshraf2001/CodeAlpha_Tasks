@@ -12,13 +12,14 @@ def admin_required(view_func):
         raise PermissionDenied
     return _wrapped_view
 
-def recruiter_required(view_func):
+def staff_required(view_func):
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
         # Checks if user is logged in, has a role assigned, and that role is 'isRecruiter'
+        allowed_roles=['isAdmin', 'isRecruiter']
         if (request.user.is_authenticated and 
             request.user.role and 
-            request.user.role.roleName == 'isRecruiter'):
+            request.user.role.roleName in allowed_roles):
             return view_func(request, *args, **kwargs)
         raise PermissionDenied
     return _wrapped_view
