@@ -90,7 +90,6 @@ def create_job_posting(request):
 
 @csrf_exempt
 @login_required
-@employee_required
 def search_job_listings(request):
     getJobData = jobPosting.objects.values('id', 'jobTitle', 'jobDescription')
     job_data = [] # To fill with with the extracted Data
