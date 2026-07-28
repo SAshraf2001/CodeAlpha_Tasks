@@ -46,3 +46,11 @@ class jobPosting(models.Model):
     
     def __str__(self):
         return self.jobTitle
+
+class jobApply(models.Model):
+    job = models.ForeignKey(jobPosting, on_delete=models.CASCADE, related_name='jobs')
+    jobUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name='applicants')
+    jobName = models.CharField(max_length=100, blank=False, null=False, help_text='Enter the Desired Job Name')
+    
+    def __str__(self):
+        return self.jobName
