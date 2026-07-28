@@ -9,6 +9,9 @@ from jobPosting.decorators import admin_required, recruiter_required, employee_r
 # Create your views here.
 @csrf_exempt
 @login_required
+@admin_required
+@recruiter_required
+@employee_required
 def userRegisteration(request):
     if request.method == 'POST':
         logged_user = request.user
@@ -40,6 +43,8 @@ def userRegisteration(request):
     
 @csrf_exempt
 @login_required
+@admin_required
+@recruiter_required
 def create_job_posting(request):
     if request.method == 'POST':
         loggedUser = request.user
@@ -89,6 +94,8 @@ def create_job_posting(request):
 
 @csrf_exempt
 @login_required
+@admin_required
+@employee_required
 def search_job_listings(request):
     getJobData = jobPosting.objects.values('id', 'jobTitle', 'jobDescription')
     job_data = [] # To fill with with the extracted Data
@@ -137,6 +144,8 @@ def search_job_listings(request):
 
 @csrf_exempt
 @login_required
+@admin_required
+@employee_required
 def apply_job(request):
     pass
 
