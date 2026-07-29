@@ -1,5 +1,5 @@
 from django.contrib import admin
-from jobPosting.models import UserProfile, jobPosting, EmployeeType, JobStatus, jobApply
+from jobPosting.models import UserProfile, jobPosting, EmployeeType, JobStatus, jobApply, trackJobApplication
 
 # Register your models here.
 @admin.register(UserProfile)
@@ -21,3 +21,7 @@ class JobStatusAdmin(admin.ModelAdmin):
 @admin.register(jobApply)
 class jobApplyAdmin(admin.ModelAdmin):
     list_display = ('id', 'jobUser', 'jobName')
+
+@admin.register(trackJobApplication)
+class trackJobApplicationAdmin(admin.ModelAdmin):
+    list_display=('id', 'application_status')

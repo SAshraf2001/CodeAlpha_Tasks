@@ -52,6 +52,13 @@ class jobApply(models.Model):
     jobUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name='applicants')
     jobName = models.CharField(max_length=100, blank=False, null=False, help_text='Enter the Desired Job Name')
     resume_upload = models.FileField(upload_to = 'resume-uploads/', blank=False, null=False)
-    
+    created_at = models.DateTimeField(default=timezone.now)
+
     def __str__(self):
         return self.jobName
+
+
+class trackJobApplication(models.Model):
+    jobApplied = models.ForeignKey(jobApply, on_delete=models.CASCADE, related_name='trackJobs')
+    jobAppliedUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name='jobUserss')
+    application_status = models.CharField(max_length=100, null=False, blank=False, help_text='Enter the Status of the Applied Job')
