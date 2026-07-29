@@ -29,7 +29,7 @@
 <h2>&#128736;&#65039; Tech Stack</h2>
 <ul>
     <li><strong>Backend Framework:</strong> Python, Django</li>
-    <li><strong>Database:</strong> SQLite (Default)</li>
+    <li><strong>Database:</strong> POSTGRESQL</li>
     <li><strong>Architecture:</strong> MVT (Model-View-Template)</li>
 </ul>
 
