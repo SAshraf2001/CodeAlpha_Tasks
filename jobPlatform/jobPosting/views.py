@@ -148,7 +148,9 @@ def apply_job(request):
             if ((getJobData.jobStatus) == 'is-active'):
                 jobName = request.POST['Job Name']
                 resume = request.FILES['Resume']
-                jobApply.objects.create(job=getJobData, jobUser=loggedUser, jobName=jobName, resume_upload=resume)
+                appliedAt = request.POST['Enter Date']
+                appliedDate = datetime.striptime(appliedAt, "%Y-%m-%d %H:%M:%S")
+                jobApply.objects.create(job=getJobData, jobUser=loggedUser, jobName=jobName, resume_upload=resume, created_at=appliedDate)
                 return JsonResponse({
                     'Status': "Applied Successfully:",
                     'Job Name': jobName,
@@ -166,5 +168,34 @@ def apply_job(request):
         'Message': "URL works fine"
     })
 
+@csrf_exempt
+@login_required
+@employee_required
 def track_application(request):
-    pass
+    try:
+        if method.request == 'POST':
+            loggedUser = request.user
+            setData = json.loads(request.body)
+            getId = setData.get('Job Id')
+            getJobData = get_object_or_404(jobApply, id=getId)
+
+            if(getJobData):
+                updateJobStatus = setData.get('Current Status')
+                trackJobApplication.objects.create(jobApplied=getJobData, jobAppliedUser=loggedUser, application_status=updateJobStatus)
+                return JsonResponse({
+                    'Message': updateJobStatus
+                })
+            else: 
+                return JsonResponse({
+                    'Message': "No Job Found"
+                })
+        return JsonResponse({
+            'Message': "Successfully Job Done"
+        })
+    except Json.JSONDecodeError as err:
+        return JsonResponse({
+            'Message': f"Exception Caught: Error ---> {str(err)}"
+        })
+    return JsonResponse({
+        'Message': "URL Works Fine"
+    })
