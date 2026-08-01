@@ -6,5 +6,6 @@ urlpatterns = [
     path('apply/', apply_job, name='apply_job'),
     path('search/', search_job_listings, name='search_job_listings'),
     path('create/', create_job_posting, name='create_job_posting'),
-    path('track/', track_application, name='track_application')
+    path('track/', track_application, name='track_application'),
+    path('set/', set_application_status, name='set_application_status')
 ]
