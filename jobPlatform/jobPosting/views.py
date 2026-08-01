@@ -198,3 +198,10 @@ def track_application(request):
         'Status': "Passed",
         'Message': "URL Works Fine"
     })
+
+
+@csrf_exempt
+@login_required
+@staff_required
+def set_application_status(request):
+    pass
