@@ -1,5 +1,5 @@
 from django.urls import path
-from jobPosting.views import userRegisteration, create_job_posting, track_application, apply_job, search_job_listings
+from jobPosting.views import userRegisteration, create_job_posting, track_application, apply_job, search_job_listings, set_application_status
 
 urlpatterns = [
     path('user/', userRegisteration, name='userRegisteration'),
