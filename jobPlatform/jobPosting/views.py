@@ -204,4 +204,14 @@ def track_application(request):
 @login_required
 @staff_required
 def set_application_status(request):
-    pass
+    try:
+        if request.method == 'POST':
+            pass
+    except json.JSONDecodeError as error:
+        return JsonResponse({
+            'Status': 'Failed to load the JSON',
+            'Message': f"Exception Caught: Error in Json f{str(error)}"
+        })
+    return JsonResponse({
+        'Message': "URL Works Fine"
+    })
