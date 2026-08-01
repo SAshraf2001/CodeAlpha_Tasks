@@ -2,7 +2,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
-from jobPosting.models import UserProfile, JobStatus, jobPosting, EmployeeType, jobApply
+from jobPosting.models import UserProfile, JobStatus, jobPosting, EmployeeType, jobApply, trackJobApplication
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from jobPosting.decorators import admin_required, staff_required, employee_required
@@ -166,5 +166,30 @@ def apply_job(request):
         'Message': "URL works fine"
     })
 
+@csrf_exempt
+@login_required
+@employee_required
 def track_application(request):
-    pass
+    try:
+        if request.method == 'POST':
+            setData = json.loads(request.body)
+            getID = setData.get('ID')
+            getTrackingData = get_object_or_404(trackJobApplication, id=getID)
+            added_status = []
+            for items in getTrackingData:
+                added_status.append({
+                    "Id": items['id'],
+                    'Status': items['application_status']
+                })
+            return JsonResponse({
+                'Message': added_status
+            })
+    except json.JSONDecodeError as error:
+        return JsonResponse({
+            'Status': "Failed",
+            'Message': f"Exception Caught: Error found in Json {str(error)}"
+        })
+    return JsonResponse({
+        'Status': "Passed",
+        'Message': "URL Works Fine"
+    })
