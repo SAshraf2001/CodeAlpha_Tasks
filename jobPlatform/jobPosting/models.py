@@ -62,3 +62,4 @@ class trackJobApplication(models.Model):
     jobApplied = models.ForeignKey(jobApply, on_delete=models.CASCADE, related_name='trackJobs')
     jobAppliedUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name='jobUserss')
     application_status = models.CharField(max_length=100, null=False, blank=False, help_text='Enter the Status of the Applied Job')
+    createdAt = models.DateTimeField(default=timezone.now)
