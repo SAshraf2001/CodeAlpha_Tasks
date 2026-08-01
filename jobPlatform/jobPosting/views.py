@@ -181,7 +181,12 @@ def track_application(request):
                     "Id": items['id'],
                     'Status': items['application_status']
                 })
-            return JsonResponse({
+            if (len(added_status) == 0) :
+                return JsonResponse({
+                    'Message': f'There is nothing to be displayed: {added_status}'
+                })
+            else:
+                return JsonResponse({
                 'Message': added_status
             })
     except json.JSONDecodeError as error:
