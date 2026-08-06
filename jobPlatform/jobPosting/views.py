@@ -214,6 +214,10 @@ def set_application_status(request):
                 'Job Name': items['jobName'],
                 'Applicant Name': items['jobUser']
             })
+        return JsonResponse({
+            'Status': 'Data Extracted Successfully',
+            'Message': getJobData
+        })
     try:
         if request.method == 'POST':
             pass
@@ -223,6 +227,5 @@ def set_application_status(request):
             'Message': f"Exception Caught: Error in Json f{str(error)}"
         })
     return JsonResponse({
-        'Message': "URL Works Fine",
-        'Status': getJobData
+        'Message': "URL Works Fine"
     })
