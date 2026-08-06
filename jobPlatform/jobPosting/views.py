@@ -204,6 +204,16 @@ def track_application(request):
 @login_required
 @staff_required
 def set_application_status(request):
+    if request.method == 'GET':      
+        setJobData = jobApply.objects.values('id', 'jobName', 'jobUser')
+        getJobData = [] # Extracting Data gets stored here.
+        
+        for items in setJobData:
+            getJobData.append({
+                'ID': items['id'],
+                'Job Name': items['jobName'],
+                'Applicant Name': items['jobUser']
+            })
     try:
         if request.method == 'POST':
             pass
@@ -213,5 +223,6 @@ def set_application_status(request):
             'Message': f"Exception Caught: Error in Json f{str(error)}"
         })
     return JsonResponse({
-        'Message': "URL Works Fine"
+        'Message': "URL Works Fine",
+        'Status': getJobData
     })
