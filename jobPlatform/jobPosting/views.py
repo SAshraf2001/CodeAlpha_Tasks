@@ -205,7 +205,7 @@ def track_application(request):
 @staff_required
 def set_application_status(request):
     if request.method == 'GET':      
-        setJobData = jobApply.objects.values('id', 'jobName', 'jobUser', 'job')
+        setJobData = jobApply.objects.values('id', 'jobName', 'jobUser', 'job__jobStatus')
         getJobData = [] # Extracting Data gets stored here.
         
         for items in setJobData:
@@ -213,7 +213,7 @@ def set_application_status(request):
                 'ID': items['id'],
                 'Job Name': items['jobName'],
                 'Applicant Name': items['jobUser'],
-                'Job Status': items['job.jobStatus']
+                'job_status': items['job__jobStatus']
             })
         return JsonResponse({
             'Status': 'Data Extracted Successfully',
@@ -221,7 +221,19 @@ def set_application_status(request):
         })
     try:
         if request.method == 'POST':
-            pass
+            setData = json.loads(request.body)
+            trackID = setData.get('ID')
+            setApplicantStatus = get_object_or_404(jobApply, id=trackID)
+            
+            if ((setApplicantStatus.job.jobStatus) == 'is-active'):
+                setStatus = 'Accepted'
+                trackJobApplication.objects.create(jobApplied=setApplicantStatus, jobAppliedUser=setApplicantStatus.user, application_status=setStatus)
+                return JsonResponse({
+                    'Status': setStatus
+                })
+            return JsonResponse({
+                'Message': 'Status has been fixed'
+            })
     except json.JSONDecodeError as error:
         return JsonResponse({
             'Status': 'Failed to load the JSON',
