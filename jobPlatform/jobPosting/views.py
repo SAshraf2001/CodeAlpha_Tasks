@@ -205,14 +205,15 @@ def track_application(request):
 @staff_required
 def set_application_status(request):
     if request.method == 'GET':      
-        setJobData = jobApply.objects.values('id', 'jobName', 'jobUser')
+        setJobData = jobApply.objects.values('id', 'jobName', 'jobUser', 'job')
         getJobData = [] # Extracting Data gets stored here.
         
         for items in setJobData:
             getJobData.append({
                 'ID': items['id'],
                 'Job Name': items['jobName'],
-                'Applicant Name': items['jobUser']
+                'Applicant Name': items['jobUser'],
+                'Job Status': items['job.jobStatus']
             })
         return JsonResponse({
             'Status': 'Data Extracted Successfully',
