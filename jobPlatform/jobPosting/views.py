@@ -230,14 +230,14 @@ def set_application_status(request):
             if ((setApplicantStatus.job.jobStatus.job_status) == 'is-active'):
                 setStatus = setData.get('Set Status')
                 time = timezone.now()
-                trackJobApplication.objects.create(jobApplied=setApplicantStatus, jobAppliedUser=setApplicantStatus.user, application_status=setStatus, created_at=time)
+                trackJobApplication.objects.create(jobApplied=setApplicantStatus, jobAppliedUser=setApplicantStatus.jobUser, application_status=setStatus, createdAt=time)
                 return JsonResponse({
                     'Status': setStatus
                 })
             else:
                 setStatus = 'Rejected, Not Applicable'
                 setTime = timezone.now()
-                trackJobApplication.objects.create(jobApplied=setApplicantStatus, jobAppliedUser=setApplicantStatus.jobUser, applicant_status=setStatus, created_at=setTime)
+                trackJobApplication.objects.create(jobApplied=setApplicantStatus, jobAppliedUser=setApplicantStatus.jobUser, applicant_status=setStatus, createdAt=setTime)
             return JsonResponse({
                 'Message': 'Status Added'
             })
