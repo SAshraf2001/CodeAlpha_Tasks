@@ -6,6 +6,8 @@ from jobPosting.models import UserProfile, JobStatus, jobPosting, EmployeeType, 
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from jobPosting.decorators import admin_required, staff_required, employee_required
+from django.utils import timezone
+
 # Create your views here.
 @csrf_exempt
 @login_required
@@ -226,7 +228,8 @@ def set_application_status(request):
             setApplicantStatus = get_object_or_404(jobApply, id=trackID)
             
             if ((setApplicantStatus.job.jobStatus) == 'is-active'):
-                setStatus = 'Accepted'
+                setStatus = setData.get('Set Status')
+                time = timezone.now()
                 trackJobApplication.objects.create(jobApplied=setApplicantStatus, jobAppliedUser=setApplicantStatus.user, application_status=setStatus)
                 return JsonResponse({
                     'Status': setStatus
