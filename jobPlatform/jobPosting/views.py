@@ -147,7 +147,7 @@ def apply_job(request):
             loggedUser = request.user
             getId = request.POST['Get Id']
             getJobData = get_object_or_404(jobPosting, id=getId)
-            if ((getJobData.jobStatus) == 'is-active'):
+            if ((getJobData.jobStatus.job_status) == 'is-active'):
                 jobName = request.POST['Job Name']
                 resume = request.FILES['Resume']
                 jobApply.objects.create(job=getJobData, jobUser=loggedUser, jobName=jobName, resume_upload=resume)
