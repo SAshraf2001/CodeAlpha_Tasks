@@ -28,9 +28,10 @@ def employee_required(view_func):
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
         # Checks if user is logged in, has a role assigned, and that role is 'isEmployee'
+        allowed_roles = ['isEmployee', 'Employee']
         if (request.user.is_authenticated and 
             request.user.role and 
-            request.user.role.roleName == 'isEmployee'):
+            request.user.role.roleName in allowed_roles):
             return view_func(request, *args, **kwargs)
         raise PermissionDenied
     return _wrapped_view
