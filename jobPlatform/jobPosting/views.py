@@ -177,19 +177,8 @@ def track_application(request):
             setData = json.loads(request.body)
             getID = setData.get('ID')
             getTrackingData = get_object_or_404(trackJobApplication, id=getID)
-            added_status = []
-            for items in getTrackingData:
-                added_status.append({
-                    "Id": items['id'],
-                    'Status': items['application_status']
-                })
-            if (len(added_status) == 0) :
-                return JsonResponse({
-                    'Message': f'There is nothing to be displayed: {added_status}'
-                })
-            else:
-                return JsonResponse({
-                'Message': added_status
+            return JsonResponse({
+                'Status': f'Current Status ---> {getTrackingData.application_status}'
             })
     except json.JSONDecodeError as error:
         return JsonResponse({
