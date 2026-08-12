@@ -220,11 +220,7 @@ def set_application_status(request):
         })
     try:
         if request.method == 'POST':
-            setData = json.loads(request.body)
-            track_id = setData.get('ID')
-            getJobData = get_object_or_404(jobApply, id=track_id)
-            
-            getJobStatus = ''
+            pass
     except json.JSONDecodeError as error:
         return JsonResponse({
             'Status': 'Failed to load the JSON',
