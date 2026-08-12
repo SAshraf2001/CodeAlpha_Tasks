@@ -227,7 +227,7 @@ def set_application_status(request):
             trackID = setData.get('ID')
             setApplicantStatus = get_object_or_404(jobApply, id=trackID)
             
-            if ((setApplicantStatus.job.jobStatus) == 'is-active'):
+            if ((setApplicantStatus.job.jobStatus.job_status) == 'is-active'):
                 setStatus = setData.get('Set Status')
                 time = timezone.now()
                 trackJobApplication.objects.create(jobApplied=setApplicantStatus, jobAppliedUser=setApplicantStatus.user, application_status=setStatus, created_at=time)
